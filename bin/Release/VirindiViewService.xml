@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VirindiViewService</name>
+    </assembly>
+    <members>
+        <member name="F:VirindiViewService.WriteTextFormats.None">
+            <summary>
+            Implies Top and Left
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.HudViewDrawStyle">
+            <summary>
+            Provides theme elements, which can be drawn by controls.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudThemeElement">
+            <summary>
+            Displays an element from the current theme.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudControl">
+            <summary>
+            The base class for all Virindi Views controls.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.Initialize">
+            <summary>
+            Called after this control is added to a ControlGroup. This is when the Name and details have been set.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.AddChild(VirindiViewService.Controls.HudControl)">
+            <summary>
+            Add and initialize a child control of this control. The child may be removed by disposing it.
+            </summary>
+            <param name="ctrl"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.RemovedChild(VirindiViewService.Controls.HudControl)">
+            <summary>
+            Called when a child of this control is disposed.
+            </summary>
+            <param name="ch"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.Dispose">
+            <summary>
+            Recursively disposes all children and removes this control from the view, if it is initialized.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.MouseWheel(System.Drawing.Point,System.Int32)">
+            <summary>
+            Handles a mouse wheel event. Parent controls must pass this on to applicable children if necessary.
+            </summary>
+            <param name="pt"></param>
+            <param name="amt"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.MouseDown(System.Drawing.Point)">
+            <summary>
+            Fires the MouseEvent event for mouse down, and sets this control as the focus control if CanTakeFocus is true.
+            
+            Parent controls must pass this on to applicable children if necessary.
+            </summary>
+            <param name="pt"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.MouseUp(System.Drawing.Point,System.Drawing.Point)">
+            <summary>
+            Fires the MouseEvent event for mouse up as well as the Hit event.
+            
+            Parent controls must pass this on to applicable children if necessary.
+            </summary>
+            <param name="pt"></param>
+            <param name="orig"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.ExternalMouseUp(System.Drawing.Point)">
+            <summary>
+            Fired when the mousedown originated outside the current view. The base version of this method
+            passes on the event to all children if the 'up' point is within its saved rect.
+            </summary>
+            <param name="pt">Mouseup point</param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.MouseMove(System.Drawing.Point)">
+            <summary>
+            Tracks mouseover and fires the MouseOverChange event, as well as the MouseEvent event for mouse move.
+            
+            Parent controls must pass this on to applicable children if necessary.
+            </summary>
+            <param name="pt"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.RawKeyAction(System.Int16,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Parses a key message and fires the specific key event methods.
+            
+            Key events are only sent to the control with focus.
+            </summary>
+            <param name="Msg"></param>
+            <param name="WParam"></param>
+            <param name="LParam"></param>
+            <param name="Eat"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.DrawNow(VirindiViewService.DxTexture)">
+            <summary>
+            WARNING: ONLY A PARENT CONTROL SHOULD CALL THIS METHOD.
+            
+            This method is overridden in derived controls to handle the actual control drawing. Overridden methods should call
+            the base, draw, and recursively call this method on all child controls.
+            </summary>
+            <param name="iSavedTarget"></param>
+        </member>
+        <member name="M:VirindiViewService.Controls.HudControl.SetClipRegion(System.Drawing.Rectangle,VirindiViewService.HudViewDrawStyle,VirindiViewService.DrawOptions,System.Drawing.Rectangle)">
+            <summary>
+            WARNING: ONLY A PARENT CONTROL SHOULD CALL THIS METHOD.
+            
+            Notifies a control of changed saved draw options. This method saves its parameters in the Savedxxx properties.
+            Parent controls should override this method and recursively notify children of their new draw options, altering
+            their pClipRegion to reflect their new position in the View.
+            
+            This base method also fires the DrawStateChange and ThemeChanged events.
+            </summary>
+            <param name="pClipRegion">This control's area, relative to the view area.</param>
+            <param name="pStyle">The theme applied to this control.</param>
+            <param name="pContext">The context of this control, eg. inside a listbox.</param>
+            <param name="pViewRect">The position of the View, in game window coordinates.</param>
+        </member>
+        <member name="P:VirindiViewService.Controls.HudControl.CanDraw">
+            <summary>
+            WARNING: ONLY A PARENT CONTROL SHOULD SET THIS PROPERTY.
+            </summary>
+        </member>
+        <member name="P:VirindiViewService.Controls.HudControl.XMLAttributes">
+            <summary>
+            List of XmlAttributes present on the XmlNode that was used to construct this control, if the control was loaded from XML. Otherwise, empty.
+            </summary>
+        </member>
+        <member name="P:VirindiViewService.Controls.HudControl.XMLNode">
+            <summary>
+            The XmlNode used to construct this control, if the control was loaded from XML. Otherwise, null.
+            </summary>
+        </member>
+        <member name="P:VirindiViewService.Controls.HudControl.InternalName">
+            <summary>
+            The name that this control will be initialized with.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudConsole">
+            <summary>
+            A multiline uneditable scrolling text box.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudPictureBox">
+            <summary>
+            A single image control.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudImageButton">
+            <summary>
+            A button using custom images.
+            </summary>
+        </member>
+        <member name="T:MyClasses.HashedList`1">
+            <summary>
+            A doubly-linked list with a Dictionary index. Duplicate items are not allowed.
+            -Add is O(1)
+            -Contains is O(1)
+            -Remove is O(1)
+            -Get/set by index is O(n)
+            -Insert is O(n)
+            -RemoveAt is O(n)
+            Additionally, a cached pointer (with associated index) is kept pointing to the last used index item.
+            When looking up an item by index, the list is walked from the head, tail, or cached index pointer.
+            Thus, doing multiple operations in index order is O(1) even without an enumerator.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MyClasses.HashedList`1.RunToIndex(System.Int32)">
+            <summary>
+            This method gets the node corresponding to a particular index. To get there,
+            the list is traversed from the head, tail, or cached index pointer (if valid).
+            </summary>
+            <param name="ind"></param>
+            <returns></returns>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudBrowser">
+            <summary>
+            Web browser control, using Awesomium (free license version)
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudHScrollBar">
+            <summary>
+            A horizontal scrollbar.
+            </summary>
+        </member>
+        <member name="T:Ciper.AC.AC_Text">
+            <summary>
+            Summary description for ByteCursor.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudCheckBox">
+            <summary>
+            A checkbox with optional associated text. Uses its parent to provide the background.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudTextBox">
+            <summary>
+            A single-line text input box.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.IElementRenderer.Measure(VirindiViewService.HudViewDrawStyle,System.Drawing.Size)">
+            <summary>
+            Called before render so the required size of the new target area can be calculated.
+            The returned value is the size of the desired draw area, not including outer borders and
+            style-dependent padding. This size must be less than or equal to MaximumSize in each dimension.
+            </summary>
+            <param name="style"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VirindiViewService.IElementRenderer.Render(VirindiViewService.IRenderTarget,System.Drawing.Rectangle,VirindiViewService.HudViewDrawStyle)">
+            <summary>
+            Draw this element. When this is called, the background and borders will already have been drawn, and
+            target will already be in BeginRender. This method should leave the target in render mode.
+            </summary>
+            <param name="target"></param>
+            <param name="drawregion"></param>
+            <param name="style"></param>
+        </member>
+        <member name="T:VirindiViewService.cTipStringRenderer">
+            <summary>
+            A renderer for string-only tooltips.
+            </summary>
+        </member>
+        <member name="T:MyClasses.HashedSet`1">
+            <summary>
+            Represents an unordered set of items. Duplicates are not allowed.
+            (This is really just a dictionary which only holds keys.)
+            Should be used when a collection of non-duplicate items is needed and
+            the order doesn't matter.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudTabView">
+            <summary>
+            A series of titled tabs along the top, each one having an associated control which appears
+            on the bottom when its tab is enabled.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudProgressBar">
+            <summary>
+            A progressbar.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudButton">
+            <summary>
+            A regular pushbutton-style control.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.Service.Game_D3DBeginSceneOriginal">
+            <summary>
+            Calls the non-hooked IDirect3DDevice9::BeginScene function. When rendering inside a VVS view or texture, use DxTexture.BeginRender() instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VirindiViewService.Service.Game_D3DEndSceneOriginal">
+            <summary>
+            Calls the non-hooked IDirect3DDevice9::EndScene function. When rendering inside a VVS view or texture, use DxTexture.EndRender() instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VirindiViewService.Service.HudBarInstance">
+            <summary>
+            Gets the current instance of the VVS bar.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudChatbox">
+            <summary>
+            A console containing game chat.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.DxTexture.BeginRender(System.Boolean,System.Boolean,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes Direct3D drawing and sets the rendertarget to this texture. Calls to this method should be minimized to improve performance. DxTexture.EndRender() must be called after calling this method.
+            </summary>
+            <param name="AlphaTestEnable"></param>
+            <param name="SeparateAlphaEnable"></param>
+            <param name="SourceBlendAlpha"></param>
+            <param name="DestinationBlendAlpha"></param>
+            <param name="BlendOperation"></param>
+        </member>
+        <member name="M:VirindiViewService.DxTexture.EndRender">
+            <summary>
+            Ends Direct3D rendering and resets the rendertarget. Must be called after DxTexture.BeginRender().
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.DxTexture.DrawLine(System.Drawing.PointF,System.Drawing.PointF,System.Drawing.Color,System.Single)">
+            <summary>
+            Note: Before use, FlushSprite() may need to be called to ensure correct ordering.
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="color"></param>
+            <param name="width"></param>
+        </member>
+        <member name="M:VirindiViewService.DxTexture.DXDrawUserPrimitives(Microsoft.DirectX.Direct3D.PrimitiveType,System.Int32,System.Object,Microsoft.DirectX.Direct3D.VertexFormats)">
+            <summary>
+            Note: Before use, you must call BeginUserDrawOperation().
+            </summary>
+            <param name="ptype"></param>
+            <param name="count"></param>
+            <param name="data"></param>
+            <param name="vertexformat"></param>
+        </member>
+        <member name="M:VirindiViewService.DxTexture.DXDrawUserPrimitives(Microsoft.DirectX.Direct3D.PrimitiveType,System.Int32,System.Object,Microsoft.DirectX.Direct3D.VertexFormats,VirindiViewService.DxTexture)">
+            <summary>
+            Note: Before use, you must call BeginUserDrawOperation().
+            </summary>
+            <param name="ptype"></param>
+            <param name="count"></param>
+            <param name="data"></param>
+            <param name="vertexformat"></param>
+            <param name="texture"></param>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudList">
+            <summary>
+            A vertically scrolling list, containing a number of rows and columns. Every row
+            has the same number and types of columns. Each column contains a specified control type.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudImageStack">
+            <summary>
+            A number of images on top of each other, which always draw in the proper order.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudStaticText">
+            <summary>
+            A simple text display control. Uses its parent to provide the background.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudFixedLayout">
+            <summary>
+            A container for multiple controls with set locations and sizes within.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudCombo">
+            <summary>
+            A dropdown list.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.ContextMenu`1.Show(System.Drawing.Point)">
+            <summary>
+            If the context menu is not visible, it is created at the specified point.
+            </summary>
+        </member>
+        <member name="M:VirindiViewService.ContextMenu`1.Show(System.Drawing.Point,VirindiViewService.HudViewDrawStyle)">
+            <summary>
+            If the context menu is not visible, it is created at the specified point with the specified theme.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.TooltipSystem.cTooltipInfo">
+            <summary>
+            Provides information about an associated tooltip.
+            </summary>
+        </member>
+        <member name="P:VirindiViewService.TooltipSystem.cTooltipInfo.Control">
+            <summary>
+            The HudControl that the tip is attached to.
+            </summary>
+        </member>
+        <member name="P:VirindiViewService.TooltipSystem.cTooltipInfo.Text">
+            <summary>
+            Deprecated.
+            Returns the text associated with a tooltip only if the tip contains a cStringRenderer.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudVScrollBar">
+            <summary>
+            A vertical scrollbar.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudHSlider">
+            <summary>
+            A horizontal slider.
+            </summary>
+        </member>
+        <member name="T:VirindiViewService.Controls.HudEmulator">
+            <summary>
+            A control that allows easy access to underlying draw methods.
+            </summary>
+        </member>
+    </members>
+</doc>

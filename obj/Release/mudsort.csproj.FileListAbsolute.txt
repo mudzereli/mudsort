@@ -1,0 +1,17 @@
+C:\Users\mudzereli\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\Release\mudsort.csproj.ResolveComReference.cache
+C:\Users\mudzereli\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\Release\mudsort.csprojResolveAssemblyReference.cache
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\mudsort.dll.config
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\mudsort.dll
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\mudsort.pdb
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\Decal.Adapter.dll
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\VirindiViewService.dll
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\WebControlWrapper.dll
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\System.Data.SQLite.dll
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\Decal.Adapter.xml
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\VirindiViewService.xml
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\Decal.Interop.Core.DLL
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\Decal.Interop.Filters.DLL
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\Decal.Interop.Net.DLL
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\obj\Release\mudsort.csproj.ResolveComReference.cache
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\obj\Release\mudsort.dll
+C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\obj\Release\mudsort.pdb

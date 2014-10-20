@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="mudsort.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DefaultSortString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OC,ES,CV,AL-,AB-,DG-,ED-,ML,MA,NM</Value>
+    </Setting>
+    <Setting Name="IdentifyOnLogin" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReverseSortList" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SavedSortString1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OC,EP,MA,AL-,MX-</Value>
+    </Setting>
+    <Setting Name="SavedSortString2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AL-,MX-</Value>
+    </Setting>
+    <Setting Name="SavedSortString3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BR-</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

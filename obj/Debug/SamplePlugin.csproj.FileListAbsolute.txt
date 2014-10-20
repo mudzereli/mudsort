@@ -1,0 +1,13 @@
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\SamplePluginVVS.dll
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\SamplePluginVVS.pdb
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\Decal.Adapter.dll
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\VirindiViewService.dll
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\WebControlWrapper.dll
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\System.Data.SQLite.dll
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\Decal.Adapter.xml
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\VirindiViewService.xml
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\bin\Debug\Decal.Interop.Core.DLL
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\Debug\ResolveAssemblyReference.cache
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\Debug\SamplePlugin.csproj.ResolveComReference.cache
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\Debug\SamplePluginVVS.dll
+D:\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\Debug\SamplePluginVVS.pdb

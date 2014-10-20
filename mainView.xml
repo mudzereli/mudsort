@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<view icon="10706" title="mudsort" width="300" height="275">
+  <control progid="DecalControls.Notebook" name="nbMain">
+  <page label="Sort">
+    <control progid="DecalControls.FixedLayout" clipped="">
+      <control progid="DecalControls.StaticText"                            left="5"    top="5"   width="290" height="20" text="Select Source Range" />
+      
+      <control progid="DecalControls.PushButton"  name="btnSourceContainer" left="5"    top="30"  width="95"  height="20" text="Set Source" />
+      <control progid="DecalControls.Edit"        name="edtSourceContainer" left="105"  top="30"  width="190" height="20" text="Source GUID" />
+      
+      <control progid="DecalControls.PushButton"  name="btnDestContainer"   left="5"    top="55"  width="95"  height="20" text="Set Dest" />
+      <control progid="DecalControls.Edit"        name="edtDestContainer"   left="105"  top="55"  width="190" height="20" text="Dest GUID" />
+      
+      <control progid="DecalControls.StaticText"                            left="5"    top="80"  width="95"  height="20" text="Insert Position" />
+      <control progid="DecalControls.Edit"        name="edtInsertion"       left="105"  top="80"  width="190" height="20" text="0" />
+      
+      <control progid="DecalControls.StaticText"                            left="5"    top="105" width="190" height="20" text="Sort String" />
+      <control progid="DecalControls.PushButton"  name="btnCopySortString"  left="200"  top="105" width="45"  height="20" text="Copy" />
+      <control progid="DecalControls.PushButton"  name="btnPasteSortString" left="250"  top="105" width="45"  height="20" text="Paste" />
+
+      <control progid="DecalControls.Edit"        name="edtSortString"      left="5"    top="130" width="795" height="20" text="" />
+      
+      <control progid="DecalControls.StaticText"                            left="5"    top="155" width="95"  height="20" text="Object Class Filter" />
+      <control progid="DecalControls.Choice"      name="cmbObjClassFilters" left="105"  top="155" width="190" height="20" selected = "0">
+        <option text="None"/>
+        <option text="####### EQUIPMENT #######" />
+        <option text="Armor"/>
+        <option text="Clothing"/>
+        <option text="Jewelry"/>
+        <option text="######## WEAPONS ########" />
+        <option text="MeleeWeapon"/>
+        <option text="MissileWeapon"/>
+        <option text="WandStaffOrb"/>
+        <option text="####### CRAFTING ########" />
+        <option text="Food"/>
+        <option text="Key"/>
+        <option text="Lockpick"/>
+        <option text="Plant"/>
+        <option text="Salvage"/>
+        <option text="####### CURRENCY ########" />
+        <option text="Money"/>
+        <option text="TradeNote"/>
+        <option text="##### MISCELLANEOUS #####" />
+        <option text="Book"/>
+        <option text="Gem"/>
+        <option text="Scroll"/>
+        <option text="SpellComponent"/>
+        <option text="HealingKit"/>
+        <option text="ManaStone"/>
+        <option text="Misc"/>
+        <option text="Unknown"/>
+      </control>
+      
+      <control progid="DecalControls.Progress"    name="prgProgressBar"     left="5"    top="180" width="290" height="20" value="0" maxvalue="100" fillcolor="0" />
+      <control progid="DecalControls.PushButton"  name="btnActivate"        left="5"    top="205" width="290" height="20" value="0" text="Activate" />
+    </control>
+  </page>
+  <page label="Build">
+    <control progid="DecalControls.FixedLayout" clipped="">
+      <control progid="DecalControls.StaticText" left="5" top="5" width="290" height="20" text="Build a Sort String" />
+      <control progid="DecalControls.StaticText"                            left="5"    top="30" width="95"  height="20" text="Sort List Filter" />
+      <control progid="DecalControls.Choice"      name="cmbSortListFilters" left="105"  top="30" width="190" height="20" selected = "0">
+        <option text="Commonly Used Keys"/>
+        <option text="All Keys"/>
+        <option text="String Keys"/>
+        <option text="Long Keys"/>
+        <option text="Double Keys"/>
+        <option text="Boolean Keys"/>
+        <option text="Other Keys"/>
+      </control>
+      <control progid="DecalControls.StaticText" name="listHeaderCode"  left="5" top="55" width="25" height="20" text="Code" />
+      <control progid="DecalControls.StaticText" name="listHeaderName"  left="35" top="55" width="120" height="20" text="Name" />
+      <control progid="DecalControls.StaticText" name="listHeaderUp"    left="160" top="55" width="20" height="20" text="Up" />
+      <control progid="DecalControls.StaticText" name="listHeaderDown"  left="185" top="55" width="20" height="20" text="Dn" />
+      <control progid="DecalControls.StaticText" name="listHeaderAdd"   left="210" top="55" width="20" height="20" text="A/R" />
+      <control progid="DecalControls.StaticText" name="listHeaderOrder" left="235" top="55" width="50" height="20" text="Ord" />
+      <control progid="DecalControls.StaticText" name="listHeaderKey"   left="260" top="55" width="50" height="20" text="Key" />
+      <control progid="DecalControls.List" name="lstSortSettings" left="5" top="80" width="290" height="1000">
+        <column progid="DecalControls.TextColumn" name="colSortFlagCode" fixedwidth="25"/>
+        <column progid="DecalControls.TextColumn" name="colSortFlagName" fixedwidth="120"/>
+        <column progid="DecalControls.IconColumn" name="colMoveUp" fixedwidth="16" fixedheight="16"/>
+        <column progid="DecalControls.IconColumn" name="colMoveDown" fixedwidth="16" fixedheight="16"/>
+        <column progid="DecalControls.IconColumn" name="colAddRemove" fixedwidth="16" fixedheight="16"/>
+        <column progid="DecalControls.IconColumn" name="colSortOrder" fixedwidth="16" fixedheight="16"/>
+        <column progid="DecalControls.IconColumn" name="colKeyType" fixedwidth="16" fixedheight="16"/>
+      </control>
+    </control>
+  </page>
+  <page label="Options">
+    <control progid="DecalControls.FixedLayout" clipped="">
+      <control progid="DecalControls.CheckBox" name="chkIdentifyOnLogin" left="5" top="5" width="290" height="20" text="Identify inventory on login." />
+      <control progid="DecalControls.CheckBox" name="chkReverseSortList" left="5" top="30" width="290" height="20" text="Completely reverse sort list." />
+      <control progid="DecalControls.StaticText"                         left="5" top="55" width="290" height="20" text="Sort String Storage" />
+      <control progid="DecalControls.PushButton"  name="btnPropertyDump"          left="5"    top="80" width="290"  height="20" text="Property Dump Selection" />
+      <control progid="DecalControls.Edit"        name="edtSavedSortString1"      left="5"    top="105" width="190" height="20" />
+      <control progid="DecalControls.PushButton"  name="btnCopySavedSortString1"  left="200"  top="105" width="45"  height="20" text="Copy" />
+      <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString1" left="250"  top="105" width="45"  height="20" text="Paste" />
+      <control progid="DecalControls.Edit"        name="edtSavedSortString2"      left="5"    top="130" width="190" height="20" />
+      <control progid="DecalControls.PushButton"  name="btnCopySavedSortString2"  left="200"  top="130" width="45"  height="20" text="Copy" />
+      <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString2" left="250"  top="130" width="45"  height="20" text="Paste" />
+      <control progid="DecalControls.Edit"        name="edtSavedSortString3"      left="5"    top="155" width="190" height="20" />
+      <control progid="DecalControls.PushButton"  name="btnCopySavedSortString3"  left="200"  top="155" width="45"  height="20" text="Copy" />
+      <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString3" left="250"  top="155" width="45"  height="20" text="Paste" />
+      <control progid="DecalControls.PushButton"  name="btnSaveSettings"          left="200"  top="180" width="95"  height="20" text="Save" />
+    </control>
+  </page>
+  <page label="About">
+    <control progid="DecalControls.FixedLayout" clipped="">
+      <control progid="DecalControls.StaticText" left="5" top="5"   width="290" height="20" text="Hi! I play as mudzereli on SC!" />
+      <control progid="DecalControls.StaticText" left="5" top="30"  width="290" height="20" text="I'm in the Saints of Solclaim!" />
+      <control progid="DecalControls.StaticText" left="5" top="55"  width="290" height="20" text="Email me at  mudz@charter.net!" />
+      <control progid="DecalControls.Edit"       left="5" top="80"  width="290" height="20" text="Weeeeeeeeeeeeeeeeeeeeeeeeeeee!" />
+    </control>
+  </page>
+  </control>
+</view>

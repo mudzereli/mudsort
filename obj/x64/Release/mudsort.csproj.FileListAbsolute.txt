@@ -1,0 +1,2 @@
+C:\Users\mudzereli\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\x64\Release\mudsort.csprojResolveAssemblyReference.cache
+C:\Users\mudzereli\Dropbox\Public\asheron\SamplePlugin\SamplePlugin-VVS\obj\x64\Release\mudsort.csproj.ResolveComReference.cache
