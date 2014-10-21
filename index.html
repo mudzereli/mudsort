@@ -1,71 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Mudsort by mudzereli</title>
+    <meta name="description" content="Mudsort : Asheron&#39;s Call Inventory Management plugin for Decal">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Mudsort</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Mudsort</h1>
-        <p>Asheron&#39;s Call Inventory Management plugin for Decal</p>
 
-        <p class="view"><a href="https://github.com/mudzereli/mudsort">View the Project on GitHub <small>mudzereli/mudsort</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mudzereli/mudsort">View on GitHub</a>
 
+          <h1 id="project_title">Mudsort</h1>
+          <h2 id="project_tagline">Asheron&#39;s Call Inventory Management plugin for Decal</h2>
 
-        <ul>
-          <li><a href="https://github.com/mudzereli/mudsort/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mudzereli/mudsort/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/mudzereli/mudsort">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mudzereli/mudsort/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mudzereli/mudsort/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="mudsort" class="anchor" href="#mudsort"><span class="octicon octicon-link"></span></a>MudSort</h1>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<p>Asheron's Call Inventory Management Decal Plugin</p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>
+<a name="what-can-it-do" class="anchor" href="#what-can-it-do"><span class="octicon octicon-link"></span></a>What Can It Do?</h2>
+
+<p><img src="https://raw.githubusercontent.com/mudzereli/mudsort/master/docs/assets/beforeafter.jpg" alt="sorted-inventory" title="Sorted Inventory Screenshot"></p>
+
+<p>Mudsort is a VERY powerful sorting plugin for Decal. Some example uses:</p>
+
+<ol>
+<li>Move all salvage from one character to another and sort it in the process</li>
+<li>Move items from your backpack to a chest while sorting them in the process</li>
+<li>Sort the contents of a chest</li>
+<li>Grab all of a certain type of item from a chest while sorting them</li>
+<li>And of course sort your inventory</li>
+</ol>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ol>
+<li><a href="http://www.asheronscall.com/en">Asheron's Call</a></li>
+<li><a href="http://www.decaldev.com/">Decal 2.9.7.5</a></li>
+<li>
+<a href="http://virindi.net/plugins/">Virindi Views</a> (Comes in Virindi Bundle)</li>
+<li><a href="https://github.com/mudzereli/mudsort/raw/master/bin/Release/mudsort.dll">mudsort.dll</a></li>
+</ol>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ol>
+<li>Download <a href="https://github.com/mudzereli/mudsort/raw/master/bin/Release/mudsort.dll">mudsort.dll</a>
+</li>
+<li>Open Decal</li>
+<li>Click <code>Add</code> in Decal</li>
+<li>Click <code>Browse</code> in Decal</li>
+<li>Find and select <code>mudsort.dll</code>
+</li>
+<li>Make sure you have <code>Virindi View Service Bootstrapper</code> running under <code>Services</code> in Decal</li>
+<li>Start Asheron's Call and enjoy!</li>
+</ol>
+
+<h2>
+<a name="plugin-usage" class="anchor" href="#plugin-usage"><span class="octicon octicon-link"></span></a>Plugin Usage</h2>
+
+<p>The best way to find out how to use the plugin is log in and play with it (there are tooltips for everything, so it kind of explains as you go).
+It will really save you a lot of time!</p>
 
 <h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a name="sort-tab" class="anchor" href="#sort-tab"><span class="octicon octicon-link"></span></a>Sort Tab</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p><img src="https://raw.githubusercontent.com/mudzereli/mudsort/master/docs/assets/plugin-sort.png" alt="plugin-sort-screenshot" title="Sort Tab Screenshot"></p>
+
+<ol>
+<li>
+<strong>Source Container</strong> -- The container the items you want to sort are in (Can be either your Character, a Backpack, or an Opened Chest). Use the button to set it to your current selection.</li>
+<li>
+<strong>Destination Container</strong> -- The container that you want your items to go into when sorting them (Can be your Character, a Backpack, an Opened Chest, or Another Player). Use the button to set it to your current selection.</li>
+<li>
+<strong>Insert Position</strong> -- The <code>Slot ID</code> to start inserting at in the <code>Destination Container</code> (Default = 0)</li>
+<li>
+<strong>Sort String</strong> -- The String to use when Sorting. Can be typed in manually or build on the <code>Build</code> tab</li>
+<li>
+<strong>Object Class Filter</strong> -- Use this to only sort a particular type of item, like Armor/Notes/Gems/Salvage/etc</li>
+<li>
+<strong>Progress Bar</strong> -- Items need to be identified before they are sorted, this progress bar tracks the identifying and sorting</li>
+<li>
+<strong>Activate Button</strong> -- Begins the sorting process, or cancels it if it's already running.</li>
+</ol>
 
 <h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<a name="build-tab" class="anchor" href="#build-tab"><span class="octicon octicon-link"></span></a>Build Tab</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p><img src="https://raw.githubusercontent.com/mudzereli/mudsort/master/docs/assets/plugin-build.png" alt="plugin-build-screenshot" title="Build Tab Screenshot"></p>
+
+<ol>
+<li>
+<strong>Sort List Filter</strong> -- Filter Sort Flags by type (Commonly Used/Word/Number/etc)</li>
+<li>
+<strong>Added Sort Flags</strong> -- Sort Flags that will be used to create the current Sort String in the Sort tab</li>
+<li>
+<strong>Remaining Sort Flags</strong> -- The additional Sort Flags in the filtered list that can be added to Sort by</li>
+</ol>
 
 <h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a name="options-tab" class="anchor" href="#options-tab"><span class="octicon octicon-link"></span></a>Options Tab</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p><img src="https://raw.githubusercontent.com/mudzereli/mudsort/master/docs/assets/plugin-options.png" alt="plugin-options-screenshot" title="Options Tab Screenshot"></p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<ol>
+<li>
+<strong>Identify Inventory On Login</strong> -- If checked, your inventory will be queued up for ID when you log in, so that when you go to sort them later, you won't have to wait for them to identify.</li>
+<li>
+<strong>Reverse Sort List</strong> -- This reverses the sorting string completely</li>
+<li>
+<strong>Property Dump Selection</strong> -- Select an item and then click this to view ALL of its properties</li>
+<li>
+<strong>Saved Sort Strings</strong> -- Use this area to save your favorite Sort Strings (fancy I know)</li>
+<li>
+<strong>Save</strong> -- Save all settings and Sort Strings</li>
+</ol>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/mudzereli">mudzereli</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Mudsort maintained by <a href="https://github.com/mudzereli">mudzereli</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
