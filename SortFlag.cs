@@ -150,6 +150,7 @@ namespace mudsort
 
         public static SortFlag decode(String decode)
         {
+            //Util.WriteToChat("[MudSort] decoding string: " + decode);
             foreach (SortFlag flag in sortedFlagList.Values)
             {
                 if (decode.Length >= 2 && flag.code.Equals(decode.Substring(0,2)))

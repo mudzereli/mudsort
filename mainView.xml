@@ -88,28 +88,29 @@
   </page>
   <page label="Options">
     <control progid="DecalControls.FixedLayout" clipped="">
-      <control progid="DecalControls.CheckBox" name="chkIdentifyOnLogin" left="5" top="5" width="290" height="20" text="Identify inventory on login." />
-      <control progid="DecalControls.CheckBox" name="chkReverseSortList" left="5" top="30" width="290" height="20" text="Completely reverse sort list." />
-      <control progid="DecalControls.StaticText"                         left="5" top="55" width="290" height="20" text="Sort String Storage" />
-      <control progid="DecalControls.PushButton"  name="btnPropertyDump"          left="5"    top="80" width="290"  height="20" text="Property Dump Selection" />
-      <control progid="DecalControls.Edit"        name="edtSavedSortString1"      left="5"    top="105" width="190" height="20" />
-      <control progid="DecalControls.PushButton"  name="btnCopySavedSortString1"  left="200"  top="105" width="45"  height="20" text="Copy" />
-      <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString1" left="250"  top="105" width="45"  height="20" text="Paste" />
-      <control progid="DecalControls.Edit"        name="edtSavedSortString2"      left="5"    top="130" width="190" height="20" />
-      <control progid="DecalControls.PushButton"  name="btnCopySavedSortString2"  left="200"  top="130" width="45"  height="20" text="Copy" />
-      <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString2" left="250"  top="130" width="45"  height="20" text="Paste" />
-      <control progid="DecalControls.Edit"        name="edtSavedSortString3"      left="5"    top="155" width="190" height="20" />
-      <control progid="DecalControls.PushButton"  name="btnCopySavedSortString3"  left="200"  top="155" width="45"  height="20" text="Copy" />
-      <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString3" left="250"  top="155" width="45"  height="20" text="Paste" />
-      <control progid="DecalControls.PushButton"  name="btnSaveSettings"          left="200"  top="180" width="95"  height="20" text="Save" />
+        <control progid="DecalControls.CheckBox"    name="chkIdentifyOnLogin"       left="5"    top="5"   width="290" height="20" text="Identify inventory on login." />
+        <control progid="DecalControls.CheckBox"    name="chkReverseSortList"       left="5"    top="30"  width="290" height="20" text="Completely reverse sort list." />
+        <control progid="DecalControls.CheckBox"    name="chkThinkWhenDone"         left="5"    top="55"  width="290" height="20" text="Think to yourself when complete." />
+        <control progid="DecalControls.PushButton"  name="btnPropertyDump"          left="5"    top="80"  width="290" height="20" text="Property Dump Selection" />
+        <control progid="DecalControls.StaticText"                                  left="5"    top="105" width="290" height="20" text="Sort String Storage" />
+        <control progid="DecalControls.Edit"        name="edtSavedSortString1"      left="5"    top="130" width="190" height="20" />
+        <control progid="DecalControls.PushButton"  name="btnCopySavedSortString1"  left="200"  top="130" width="45"  height="20" text="Copy" />
+        <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString1" left="250"  top="130" width="45"  height="20" text="Paste" />
+        <control progid="DecalControls.Edit"        name="edtSavedSortString2"      left="5"    top="155" width="190" height="20" />
+        <control progid="DecalControls.PushButton"  name="btnCopySavedSortString2"  left="200"  top="155" width="45"  height="20" text="Copy" />
+        <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString2" left="250"  top="155" width="45"  height="20" text="Paste" />
+        <control progid="DecalControls.Edit"        name="edtSavedSortString3"      left="5"    top="180" width="190" height="20" />
+        <control progid="DecalControls.PushButton"  name="btnCopySavedSortString3"  left="200"  top="180" width="45"  height="20" text="Copy" />
+        <control progid="DecalControls.PushButton"  name="btnPasteSavedSortString3" left="250"  top="180" width="45"  height="20" text="Paste" />
+        <control progid="DecalControls.PushButton"  name="btnSaveSettings"          left="200"  top="205" width="95"  height="20" text="Save" />
     </control>
   </page>
   <page label="About">
     <control progid="DecalControls.FixedLayout" clipped="">
-      <control progid="DecalControls.StaticText" left="5" top="5"   width="290" height="20" text="Hi! I play as mudzereli on SC!" />
-      <control progid="DecalControls.StaticText" left="5" top="30"  width="290" height="20" text="I'm in the Saints of Solclaim!" />
-      <control progid="DecalControls.StaticText" left="5" top="55"  width="290" height="20" text="Email me at  mudz@charter.net!" />
-      <control progid="DecalControls.Edit"       left="5" top="80"  width="290" height="20" text="Weeeeeeeeeeeeeeeeeeeeeeeeeeee!" />
+        <control progid="DecalControls.StaticText" left="5" top="5"   width="290" height="20" text="Hi! I play as mudzereli on SC!" />
+        <control progid="DecalControls.StaticText" left="5" top="30"  width="290" height="20" text="I'm in the Saints of Solclaim!" />
+        <control progid="DecalControls.StaticText" left="5" top="55"  width="290" height="20" text="Email me at  mudz@charter.net!" />
+        <control progid="DecalControls.Edit"       left="5" top="80"  width="290" height="20" text="Weeeeeeeeeeeeeeeeeeeeeeeeeeee!" />
     </control>
   </page>
   </control>

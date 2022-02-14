@@ -15,3 +15,14 @@ C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\bin\Release\Decal.Interop.Net.
 C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\obj\Release\mudsort.csproj.ResolveComReference.cache
 C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\obj\Release\mudsort.dll
 C:\Users\mudzereli\Dropbox\Public\asheron\mudsort\obj\Release\mudsort.pdb
+C:\Turbine\Asheron's Call\mudsort\bin\Release\mudsort.dll.config
+C:\Turbine\Asheron's Call\mudsort\bin\Release\mudsort.dll
+C:\Turbine\Asheron's Call\mudsort\bin\Release\mudsort.pdb
+C:\Turbine\Asheron's Call\mudsort\bin\Release\Decal.Interop.Core.dll
+C:\Turbine\Asheron's Call\mudsort\bin\Release\Decal.Interop.Net.dll
+C:\Turbine\Asheron's Call\mudsort\bin\Release\Decal.Interop.Filters.dll
+C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.csproj.ResolveComReference.cache
+C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.csproj.CoreCompileInputs.cache
+C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.csproj.CopyComplete
+C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.dll
+C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.pdb

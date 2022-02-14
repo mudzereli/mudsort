@@ -13,6 +13,7 @@ class MainView : IDisposable
     public static HudButton btnActivate;
     public static HudCheckBox chkIdentifyOnLogin;
     public static HudCheckBox chkReverseSortList;
+    public static HudCheckBox chkThinkWhenDone;
     public static HudCombo cmbObjClassFilters;
     public static HudCombo cmbSortListFilters;
     public static ControlGroup controls;
@@ -56,6 +57,7 @@ class MainView : IDisposable
         lstSortSettings     = View != null ? (HudList)View["lstSortSettings"]     : new HudList();
 
         chkIdentifyOnLogin  = View != null ? (HudCheckBox)View["chkIdentifyOnLogin"] : new HudCheckBox();
+        chkThinkWhenDone    = View != null ? (HudCheckBox)View["chkThinkWhenDone"]   : new HudCheckBox();
         chkReverseSortList  = View != null ? (HudCheckBox)View["chkReverseSortList"] : new HudCheckBox();
         edtSavedSortString1 = View != null ? (HudTextBox)View["edtSavedSortString1"] : new HudTextBox();
         edtSavedSortString2 = View != null ? (HudTextBox)View["edtSavedSortString2"] : new HudTextBox();
@@ -99,6 +101,7 @@ class MainView : IDisposable
             View.UserResizeable = true;
 
             chkIdentifyOnLogin.Checked = Properties.Settings.Default.IdentifyOnLogin;
+            chkThinkWhenDone.Checked   = Properties.Settings.Default.ThinkWhenDone;
             chkReverseSortList.Checked = Properties.Settings.Default.ReverseSortList;
             edtSortString.Text         = Properties.Settings.Default.DefaultSortString;
             edtSavedSortString1.Text   = Properties.Settings.Default.SavedSortString1;
@@ -172,6 +175,12 @@ class MainView : IDisposable
 
 
             ((HudList)View["lstSortSettings"]).Click += new HudList.delClickedControl(lstSortSettings_Selected);
+
+            ((HudCheckBox)View["chkThinkWhenDone"]).Change += (s, e) =>
+            {
+                Properties.Settings.Default.ThinkWhenDone = ((HudCheckBox)View["chkThinkWhenDone"]).Checked;
+                Properties.Settings.Default.Save();
+            };
 
             ((HudCheckBox) View["chkIdentifyOnLogin"]).Change += (s, e) =>
             {

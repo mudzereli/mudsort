@@ -11,8 +11,7 @@ using System.Collections.Generic;
  * Plugin created by mudzereli 2012/12
 */
 
-namespace mudsort
-{
+namespace mudsort {
 
 [WireUpBaseEvents]
 [FriendlyName("mudsort")]
@@ -23,10 +22,14 @@ public class PluginCore : PluginBase
     const int ICON_MOVE_DOWN = 0x60028FD; // RED DOWN ARROW
     const int ICON_MOVE_UP = 0x60028FC; // GREEN UP ARROW
     const int ICON_REMOVE = 0x60011F8; //RED CIRCLE SLASH
+
     private static PluginCore instance;
+
     public int containerDest = 0;
     public int containerDestSlot = 0;
     public int containerSource = 0;
+    public string ocfilter = "";
+
     private State CURRENT_STATE = State.IDLE;
     private ArrayList sortFlags = new ArrayList();
     private ArrayList sortList = new ArrayList();
@@ -46,7 +49,11 @@ public class PluginCore : PluginBase
             sortList.Clear();
             foreach (WorldObject worldObject in Core.WorldFilter.GetByContainer(containerSource))
             {
-                if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0 && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1 && !worldObject.ObjectClass.Equals(ObjectClass.Foci) && (MainView.cmbObjClassFilters.Current == 0 || worldObject.ObjectClass.ToString().Equals(((HudStaticText)MainView.cmbObjClassFilters[MainView.cmbObjClassFilters.Current]).Text)))
+                if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0 
+                        && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1 
+                        && !worldObject.ObjectClass.Equals(ObjectClass.Foci) 
+                        && ((MainView.cmbObjClassFilters.Current != 0 && worldObject.ObjectClass.ToString().ToLower().StartsWith(((HudStaticText)MainView.cmbObjClassFilters[MainView.cmbObjClassFilters.Current]).Text.ToLower()))
+                            ||worldObject.ObjectClass.ToString().ToLower().StartsWith(ocfilter.ToLower())))
                 {
                     addWorldObject(sortList, worldObject, false);
                 }
@@ -139,13 +146,14 @@ public class PluginCore : PluginBase
     public void createSortFlagListFromString(String str)
     {
         sortFlags.Clear();
-
+        
         foreach (SortFlag sf in SortFlag.sortedFlagList.Values)
         {
             sf.descending = false;
         }
 
         String[] sortKeys = str.Split(',');
+        //Util.WriteToChat("creating list from " + sortKeys.Length + " keys");
         for (int i = 0; i < sortKeys.Length; i++)
         {
             try
@@ -156,6 +164,7 @@ public class PluginCore : PluginBase
             }
             catch (Exception e) { Util.LogError(e); }
         }
+        //Util.WriteToChat("SortFlags Contains " + sortFlags.Count + " flags");
     }
 
     private void Current_RenderFrame_Sort(object sender, EventArgs e)
@@ -260,6 +269,10 @@ public class PluginCore : PluginBase
                     MainView.prgProgressBar.PreText = "done!";
                     MainView.prgProgressBar.Position = MainView.prgProgressBar.Max;
                     MainView.btnActivate.Text = "Activate";
+                    if(Properties.Settings.Default.ThinkWhenDone)
+                    {
+                        Globals.Host.Actions.InvokeChatParser("/tell "+Core.CharacterFilter.Name+", done sorting!");
+                    }
                     Util.WriteToChat("done sorting items!");
                 }
             }
@@ -390,16 +403,21 @@ public class PluginCore : PluginBase
             }
 
         }
+        MainView.edtSortString.Text = sortFlagListToString();
     }
 
     public void setDestContainer()
     {
+        setDestContainer(Core.Actions.CurrentSelection);
+    }
+
+    public void setDestContainer(int containerID)
+    {
         try
         {
-            int selected = Core.Actions.CurrentSelection;
-            if (selected != 0 && Core.WorldFilter[selected].Values(LongValueKey.ItemSlots) > 0)
+            if (containerID != 0 && Core.WorldFilter[containerID].Values(LongValueKey.ItemSlots) > 0)
             {
-                containerDest = selected;
+                containerDest = containerID;
             }
             else
             {
@@ -412,12 +430,16 @@ public class PluginCore : PluginBase
 
     public void setSourceContainer()
     {
+        setSourceContainer(Core.Actions.CurrentSelection);
+    }
+
+    public void setSourceContainer(int containerID)
+    {
         try
         {
-            int selected = Core.Actions.CurrentSelection;
-            if (selected != 0 && Core.WorldFilter[selected].Values(LongValueKey.ItemSlots) > 0)
+            if (containerID != 0 && Core.WorldFilter[containerID].Values(LongValueKey.ItemSlots) > 0)
             {
-                containerSource = selected;
+                containerSource = containerID;
             }
             else
             {
@@ -427,8 +449,6 @@ public class PluginCore : PluginBase
         }
         catch (Exception ex) { Util.LogError(ex); }
     }
-
-    protected override void Shutdown(){}
 
     private String sortFlagListToString()
     {
@@ -440,6 +460,157 @@ public class PluginCore : PluginBase
         return s;
     }
 
+    void Current_CommandLineText(object sender, ChatParserInterceptEventArgs e)
+    {
+        try
+        {
+            if (e.Text == null)
+                return;
+            if (ProcessMSCommand(e.Text))
+                e.Eat = true;
+        }
+        catch (Exception ex) { Util.LogError(ex); }
+    }
+
+    public bool ProcessMSCommand(string msCommand)
+    {
+        msCommand = msCommand.ToLower().Trim();
+
+        if (msCommand.StartsWith("/ms help"))
+        {
+            Util.WriteToChat("listing help / commands...");
+            Util.WriteToChat("/ms start - start sorting");
+            Util.WriteToChat("/ms stop - cancel sorting");
+            Util.WriteToChat("/ms set source (pack <1-8>|player|<containerID>) - set source container to: pack 1-8, player, given containerID, or selection (no argument)");
+            Util.WriteToChat("/ms set dest (pack <1-8>|player|<containerID>) - set destination to: pack 1-8, player, given containerID, or selection (no argument)");
+            Util.WriteToChat("/ms set flags (sort flag string) - sets the sort string to the given argument");
+            Util.WriteToChat("/ms set ocfilter (object class string) - sets the object class filter to the given argument");
+            Util.WriteToChat("/ms clear ocfilter - clears the object class filter");
+            return true;
+        }
+
+        if (msCommand.Equals("/ms set ocfilter")|| msCommand.Equals("/ms clear ocfilter"))
+        {
+            msCommand = msCommand.Substring("/ms set ocfilter ".Length);
+            Util.WriteToChat("Clearing ObjectClass Filter.");
+            ocfilter = "";
+            return true;
+        }
+
+        if (msCommand.StartsWith("/ms set ocfilter "))
+        {
+            msCommand = msCommand.Substring("/ms set ocfilter ".Length);
+            Util.WriteToChat("Setting ObjectClass Filter: " + msCommand);
+            ocfilter = msCommand;
+            return true;
+        }
+
+        if (msCommand.Equals("/ms set source"))
+        {
+            Util.WriteToChat("Setting Source Container to Selection...");
+            setSourceContainer();
+            return true;
+        }
+
+        if (msCommand.Equals("/ms set dest"))
+        {
+            Util.WriteToChat("Setting Destination Container to Selection...");
+            setDestContainer();
+            return true;
+        }
+
+        if (msCommand.StartsWith("/ms set source "))
+        {
+            msCommand = msCommand.Substring("/ms set source ".Length).ToLower();
+            if (msCommand.StartsWith("player"))
+            {
+                Util.WriteToChat("Setting Source Container to Player ID: " + Core.CharacterFilter.Id);
+                setSourceContainer(Core.CharacterFilter.Id);
+                return true;
+            }
+            if (msCommand.StartsWith("pack"))
+            {
+                msCommand = msCommand.Substring("pack".Length);
+                foreach (WorldObject worldObject in Core.WorldFilter.GetByContainer(Core.CharacterFilter.Id))
+                {
+                    if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0
+                            && worldObject.ObjectClass == ObjectClass.Container
+                            && worldObject.Values(LongValueKey.Slot) + 1 == Int32.Parse(msCommand)
+                            && !worldObject.ObjectClass.Equals(ObjectClass.Foci))
+                    {
+                        Util.WriteToChat("Setting Source Container to: " + worldObject.Id + "...");
+                        setSourceContainer(worldObject.Id);
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                Util.WriteToChat("Setting Source Container to: " + msCommand + "...");
+                setSourceContainer(Int32.Parse(msCommand));
+                return true;
+            }
+            return true;
+            }
+
+        if (msCommand.StartsWith("/ms set dest "))
+        {
+            msCommand = msCommand.Substring("/ms set dest ".Length).ToLower();
+            if (msCommand.StartsWith("player"))
+            {
+                Util.WriteToChat("Setting Destination Container to Player ID: " + Core.CharacterFilter.Id);
+                setDestContainer(Core.CharacterFilter.Id);
+                return true;
+            }
+            if (msCommand.StartsWith("pack"))
+            {
+                msCommand = msCommand.Substring("pack".Length);
+                foreach (WorldObject worldObject in Core.WorldFilter.GetByContainer(Core.CharacterFilter.Id))
+                {
+                    if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0
+                            && worldObject.ObjectClass == ObjectClass.Container
+                            && worldObject.Values(LongValueKey.Slot) + 1 == Int32.Parse(msCommand)
+                            && !worldObject.ObjectClass.Equals(ObjectClass.Foci))
+                        {
+                            Util.WriteToChat("Setting Destination Container to: " + worldObject.Id + "...");
+                            setDestContainer(worldObject.Id);
+                            return true;
+                    }
+                }
+            } else
+            {
+                Util.WriteToChat("Setting Destination Container to: " + msCommand + "...");
+                setDestContainer(Int32.Parse(msCommand));
+                return true;
+            }
+            return true;
+        }
+
+        if (msCommand.StartsWith("/ms set flags "))
+        {
+            msCommand = msCommand.Substring("/ms set flags ".Length).ToUpper();
+            Util.WriteToChat("Updated Sort Flags: "+msCommand);
+            getInstance().createSortFlagListFromString(msCommand);
+            getInstance().rebuildLstSortSettings();
+            return true;
+        }
+
+        if (msCommand.StartsWith("/ms start"))
+        {
+            Util.WriteToChat("Starting Sort...");
+            getInstance().activate();
+            return true;
+        }
+
+        if (msCommand.StartsWith("/ms stop"))
+        {
+            Util.WriteToChat("Stopping Sort...");
+            getInstance().cancel();
+            return true;
+        }
+        return false;
+    }
+
     protected override void Startup()
     {
         try
@@ -447,8 +618,16 @@ public class PluginCore : PluginBase
             instance = this;
             Globals.Init("mudsort", Host, Core);
             MainView.ViewInit();
+            CoreManager.Current.CommandLineText += new EventHandler<ChatParserInterceptEventArgs>(Current_CommandLineText);
+        } catch (Exception ex) { Util.LogError(ex); }
+    }
+
+    protected override void Shutdown()
+    {
+        try
+        {
+            CoreManager.Current.CommandLineText -= new EventHandler<ChatParserInterceptEventArgs>(Current_CommandLineText);
         }
         catch (Exception ex) { Util.LogError(ex); }
     }
-}
-}
+}}

@@ -20,5 +20,8 @@
     <Setting Name="SavedSortString3" Type="System.String" Scope="User">
       <Value Profile="(Default)">BR-</Value>
     </Setting>
+    <Setting Name="ThinkWhenDone" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
