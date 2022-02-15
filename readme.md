@@ -73,4 +73,4 @@ It will really save you a lot of time!
 - `/ms set dest (pack <1-8>|player|<containerID>)` -- set destination container to: pack 1-8, player, given containerID, or selection (no argument)
 - `/ms set flags (sort flag string)` -- sets the sort string to the given argument
 - `/ms set ocfilter (object class string)` -- sets the object class filter to the given argument (accepts partial names, such as manast for ManaStone)
-- `ms clear ocfilter` -- clears the object class filter
+- `/ms clear ocfilter` -- clears the object class filter
