@@ -19,7 +19,7 @@ Mudsort is a VERY powerful sorting plugin for Decal. Some example uses:
 1. [Asheron's Call](http://www.asheronscall.com/en)
 2. [Decal 2.9.7.5](http://www.decaldev.com/)
 3. [Virindi Views](http://virindi.net/plugins/) (Comes in Virindi Bundle)
-4. [mudsort.dll](https://github.com/mudzereli/mudsort/raw/master/bin/Release/mudsort.dll)
+4. [mudsort.dll](https://github.com/mudzereli/mudsort/releases)
 
 ## Installation
 
