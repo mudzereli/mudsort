@@ -26,4 +26,3 @@ C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.csproj.CoreCompileInputs.c
 C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.csproj.CopyComplete
 C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.dll
 C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.pdb
-C:\Turbine\Asheron's Call\mudsort\obj\Release\mudsort.csproj.AssemblyReference.cache

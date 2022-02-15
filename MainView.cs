@@ -110,6 +110,19 @@ class MainView : IDisposable
             edtSavedSortString2.Text   = Properties.Settings.Default.SavedSortString2;
             edtSavedSortString3.Text   = Properties.Settings.Default.SavedSortString3;
 
+            ((HudCombo)View["cmbObjClassFilters"]).Change += (s, e) =>
+            {
+                //Util.WriteToChat("changing combo object class filter: " + cmbObjClassFilters[cmbObjClassFilters.Current].Name);
+                if (((HudStaticText)cmbObjClassFilters[cmbObjClassFilters.Current]).Text.Equals("None"))
+                {
+                    PluginCore.getInstance().ocfilter = "";
+                }
+                if (!((HudStaticText)cmbObjClassFilters[cmbObjClassFilters.Current]).Text.Equals("Custom"))
+                {
+                    PluginCore.getInstance().ocfilter = ((HudStaticText)cmbObjClassFilters[cmbObjClassFilters.Current]).Text;
+                }
+            };
+
             View["btnSourceContainer"].Hit += (s, e) =>
             {
                 PluginCore.getInstance().setSourceContainer();
@@ -178,7 +191,6 @@ class MainView : IDisposable
                 Properties.Settings.Default.DefaultSortString = edtSortString.Text;
                 Properties.Settings.Default.Save();
             };
-
 
             ((HudList)View["lstSortSettings"]).Click += new HudList.delClickedControl(lstSortSettings_Selected);
 

@@ -52,8 +52,8 @@ public class PluginCore : PluginBase
                 if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0 
                         && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1 
                         && !worldObject.ObjectClass.Equals(ObjectClass.Foci) 
-                        && ((MainView.cmbObjClassFilters.Current != 0 && worldObject.ObjectClass.ToString().ToLower().StartsWith(((HudStaticText)MainView.cmbObjClassFilters[MainView.cmbObjClassFilters.Current]).Text.ToLower()))
-                            ||worldObject.ObjectClass.ToString().ToLower().StartsWith(ocfilter.ToLower())))
+                        && (MainView.cmbObjClassFilters.Current == 0
+                            || (MainView.cmbObjClassFilters.Current != 0 && worldObject.ObjectClass.ToString().ToLower().StartsWith(ocfilter.ToLower()))))
                 {
                     addWorldObject(sortList, worldObject, false);
                 }
@@ -494,6 +494,7 @@ public class PluginCore : PluginBase
             msCommand = msCommand.Substring("/ms set ocfilter ".Length);
             Util.WriteToChat("Clearing ObjectClass Filter.");
             ocfilter = "";
+            MainView.cmbObjClassFilters.Current = 0;
             return true;
         }
 
@@ -502,6 +503,7 @@ public class PluginCore : PluginBase
             msCommand = msCommand.Substring("/ms set ocfilter ".Length);
             Util.WriteToChat("Setting ObjectClass Filter: " + msCommand);
             ocfilter = msCommand;
+            MainView.cmbObjClassFilters.Current = MainView.cmbObjClassFilters.Count-1;
             return true;
         }
 

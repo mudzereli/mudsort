@@ -49,6 +49,7 @@
         <option text="ManaStone"/>
         <option text="Misc"/>
         <option text="Unknown"/>
+		<option text="Custom"/>
       </control>
       
       <control progid="DecalControls.Progress"    name="prgProgressBar"     left="5"    top="180" width="290" height="20" value="0" maxvalue="100" fillcolor="0" />
