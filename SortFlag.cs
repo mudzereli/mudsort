@@ -10,7 +10,8 @@ namespace mudsort
         public static SortedList sortedFlagList = new SortedList(new AlphanumComparator());
 
         public static SortFlag OBJECT_CLASS = new SortFlag("ObjectClass",0x29D1,"OC", "OC");
-        
+        public static SortFlag CALCED_TOTAL_RATINGS = new SortFlag("CalcedTotalRatings", 0x29D1, "TR", "TR");
+
         public String name;
         public String code;
         public Object key;
@@ -53,15 +54,17 @@ namespace mudsort
                 CommonFlags.Add("MeleeDefenseBonus");
                 CommonFlags.Add("Variance");
                 ArrayList codes = new ArrayList();
-                codes.Add("OC");
+                codes.Add(OBJECT_CLASS.code);
+                codes.Add(CALCED_TOTAL_RATINGS.code);
                 ArrayList enums = new ArrayList();
-                enums.AddRange(Enum.GetValues(typeof(StringValueKey)));
-                enums.AddRange(Enum.GetValues(typeof(LongValueKey)));
+                enums.AddRange(Enum.GetValues(typeof(MSStringValueKey)));
+                enums.AddRange(Enum.GetValues(typeof(MSLongValueKey)));
                 enums.AddRange(Enum.GetValues(typeof(DoubleValueKey)));
-                enums.AddRange(Enum.GetValues(typeof(BoolValueKey)));
+                enums.AddRange(Enum.GetValues(typeof(MSBoolValueKey)));
                 foreach (var key in enums)
                 {
                     String name = key.ToString();
+                    // set up code
                     String code = "";
                     foreach (Char c in name)
                     {
@@ -109,11 +112,11 @@ namespace mudsort
                         code = code.ToUpper();
                     }
                     int keyIcon = 0x29D1;
-                    if (key is StringValueKey)
+                    if (key is MSStringValueKey)
                     {
                         keyIcon = 0x29CC;
                     }
-                    else if (key is LongValueKey)
+                    else if (key is MSLongValueKey)
                     {
                         keyIcon = 0x29CD;
                     }
@@ -121,7 +124,7 @@ namespace mudsort
                     {
                         keyIcon = 0x29CE;
                     }
-                    else if (key is BoolValueKey)
+                    else if (key is MSBoolValueKey)
                     {
                         keyIcon = 0x29CF;
                     }
@@ -175,15 +178,24 @@ namespace mudsort
 
         public Object directValueOf(WorldObject obj)
         {
-            if (key.Equals("OC"))
+            if (this == OBJECT_CLASS)
             {
                 return obj.ObjectClass;
             }
-            else if (key is StringValueKey)
+            else if (this == CALCED_TOTAL_RATINGS)
+            {
+                return obj.Values((LongValueKey)MSLongValueKey.DamRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.DamResistRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.CritDamRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.CritDamResistRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.HealBoostRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.VitalityRating);
+            }
+            else if (key is MSStringValueKey)
             {
                 return obj.Values((StringValueKey)key);
             }
-            else if (key is LongValueKey)
+            else if (key is MSLongValueKey)
             {
                 return obj.Values((LongValueKey)key);
             }
@@ -191,7 +203,7 @@ namespace mudsort
             {
                 return obj.Values((DoubleValueKey)key);
             }
-            else if (key is BoolValueKey)
+            else if (key is MSBoolValueKey)
             {
                 return obj.Values((BoolValueKey)key);
             }

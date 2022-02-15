@@ -107,10 +107,8 @@
   </page>
   <page label="About">
     <control progid="DecalControls.FixedLayout" clipped="">
-        <control progid="DecalControls.StaticText" left="5" top="5"   width="290" height="20" text="Hi! I play as mudzereli on SC!" />
-        <control progid="DecalControls.StaticText" left="5" top="30"  width="290" height="20" text="I'm in the Saints of Solclaim!" />
-        <control progid="DecalControls.StaticText" left="5" top="55"  width="290" height="20" text="Email me at  mudz@charter.net!" />
-        <control progid="DecalControls.Edit"       left="5" top="80"  width="290" height="20" text="Weeeeeeeeeeeeeeeeeeeeeeeeeeee!" />
+        <control progid="DecalControls.StaticText" left="5" top="5"   width="290" height="20" text="Hi! I play as Porkchop on Coldeve!" />
+        <control progid="DecalControls.StaticText" left="5" top="30"  width="290" height="20" text="Catch me on discord @ mudzereli#1230" />
     </control>
   </page>
   </control>

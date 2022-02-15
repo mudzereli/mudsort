@@ -65,3 +65,12 @@ It will really save you a lot of time!
 3. **Property Dump Selection** -- Select an item and then click this to view ALL of its properties
 4. **Saved Sort Strings** -- Use this area to save your favorite Sort Strings (fancy I know)
 5. **Save** -- Save all settings and Sort Strings
+
+###Commands
+- `/ms help` -- lists commands
+- `/ms start` -- start sorting
+- `/ms set source (pack <1-8>|player|<containerID>)` -- set source container to: pack 1-8, player, given containerID, or selection (no argument)
+- `/ms set dest (pack <1-8>|player|<containerID>)` -- set destination container to: pack 1-8, player, given containerID, or selection (no argument)
+- `/ms set flags (sort flag string)` -- sets the sort string to the given argument
+- `/ms set ocfilter (object class string)` -- sets the object class filter to the given argument (accepts partial names, such as manast for ManaStone)
+- `ms clear ocfilter` -- clears the object class filter

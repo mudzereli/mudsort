@@ -372,13 +372,13 @@ public class PluginCore : PluginBase
         foreach (SortFlag iFlag in SortFlag.sortedFlagList.Values)
         {
             int id = 6;
-            if (iFlag.key is StringValueKey) {
+            if (iFlag.key is MSStringValueKey) {
                 id = 2;
-            } else if (iFlag.key is LongValueKey) {
+            } else if (iFlag.key is MSLongValueKey) {
                 id = 3;
             } else if (iFlag.key is DoubleValueKey) {
                 id = 4;
-            } else if (iFlag.key is BoolValueKey) {
+            } else if (iFlag.key is MSBoolValueKey) {
                 id = 5;
             }
             bool common = false;

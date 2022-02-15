@@ -50,7 +50,7 @@ namespace mudsort
 		{
 			try
 			{
-				Globals.Host.Actions.AddChatText("## " + Globals.PluginName + " ##: " + message, 5);
+				Globals.Host.Actions.AddChatText("[" + Globals.PluginName + "]: " + message, 5);
 			}
 			catch (Exception ex) { LogError(ex); }
 		}

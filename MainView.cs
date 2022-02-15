@@ -45,6 +45,7 @@ class MainView : IDisposable
         parser.ParseFromResource("mudsort.mainView.xml", out properties, out controls);
         View = new VirindiViewService.HudView(properties, controls);
 
+        // set up code for underlying controls
         edtSourceContainer  = View != null ? (HudTextBox)     View["edtSourceContainer"]    : new HudTextBox();
         edtDestContainer    = View != null ? (HudTextBox)     View["edtDestContainer"]      : new HudTextBox();
         edtInsertion        = View != null ? (HudTextBox)     View["edtInsertion"]          : new HudTextBox();
@@ -63,6 +64,7 @@ class MainView : IDisposable
         edtSavedSortString2 = View != null ? (HudTextBox)View["edtSavedSortString2"] : new HudTextBox();
         edtSavedSortString3 = View != null ? (HudTextBox)View["edtSavedSortString3"] : new HudTextBox();
 
+        // associate tooltips with controls
         VirindiViewService.TooltipSystem.AssociateTooltip(View["btnSourceContainer"], "Sets the source Backpack/Person/Chest for sorting to your current Selection");
         VirindiViewService.TooltipSystem.AssociateTooltip(edtSourceContainer, "The Backpack/Person/Chest the items will move from when sorted (Default = Your Character ID)");
         VirindiViewService.TooltipSystem.AssociateTooltip(View["btnDestContainer"], "Sets the destination Backpack/Person/Chest for sorting to your current Selection");
@@ -133,17 +135,17 @@ class MainView : IDisposable
             {
                 try
                 {
-                    Properties.Settings.Default.DefaultSortString = MainView.edtSortString.Text;
-                    Properties.Settings.Default.Save();
                     PluginCore.getInstance().createSortFlagListFromString(((HudTextBox)View["edtSortString"]).Text);
                     PluginCore.getInstance().rebuildLstSortSettings();
+                    Properties.Settings.Default.DefaultSortString = MainView.edtSortString.Text;
+                    Properties.Settings.Default.Save();
                 }
                 catch (Exception ex) { Util.LogError(ex); }
             };
             
             View["btnCopySortString"].Hit += (s, e) =>
             {
-                try { System.Windows.Forms.Clipboard.SetText(edtSortString.Text); }catch (Exception ex) { Util.LogError(ex); }
+                try { System.Windows.Forms.Clipboard.SetText(edtSortString.Text); } catch (Exception ex) { Util.LogError(ex); }
             };
             
             View["btnPasteSortString"].Hit += (s, e) =>
@@ -151,6 +153,8 @@ class MainView : IDisposable
                 edtSortString.Text = System.Windows.Forms.Clipboard.GetText();
                 PluginCore.getInstance().createSortFlagListFromString(edtSortString.Text);
                 PluginCore.getInstance().rebuildLstSortSettings();
+                Properties.Settings.Default.DefaultSortString = edtSortString.Text;
+                Properties.Settings.Default.Save();
             };
 
             View["btnActivate"].Hit += (s, e) =>
@@ -171,6 +175,8 @@ class MainView : IDisposable
             {
                 PluginCore.getInstance().createSortFlagListFromString(edtSortString.Text);
                 PluginCore.getInstance().rebuildLstSortSettings();
+                Properties.Settings.Default.DefaultSortString = edtSortString.Text;
+                Properties.Settings.Default.Save();
             };
 
 
@@ -206,7 +212,7 @@ class MainView : IDisposable
                 catch (Exception ex) { Util.LogError(ex); }
             };
 
-            edtSavedSortString1.KeyEvent += (s, e) =>
+            edtSavedSortString1.Change += (s, e) =>
             {
                 try
                 {
@@ -216,7 +222,7 @@ class MainView : IDisposable
                 catch (Exception ex) { Util.LogError(ex); }
             };
 
-            edtSavedSortString2.KeyEvent += (s, e) =>
+            edtSavedSortString2.Change += (s, e) =>
             {
                 try
                 {
@@ -226,7 +232,7 @@ class MainView : IDisposable
                 catch (Exception ex) { Util.LogError(ex); }
             };
 
-            edtSavedSortString3.KeyEvent += (s, e) =>
+            edtSavedSortString3.Change += (s, e) =>
             {
                 try
                 {
@@ -250,6 +256,8 @@ class MainView : IDisposable
                 try 
                 {
                     edtSavedSortString1.Text = System.Windows.Forms.Clipboard.GetText();
+                    Properties.Settings.Default.SavedSortString1 = edtSavedSortString1.Text;
+                    Properties.Settings.Default.Save();
                 }
                 catch (Exception ex) { Util.LogError(ex); }
             };
@@ -268,6 +276,8 @@ class MainView : IDisposable
                 try 
                 {
                     edtSavedSortString2.Text = System.Windows.Forms.Clipboard.GetText();
+                    Properties.Settings.Default.SavedSortString2 = edtSavedSortString2.Text;
+                    Properties.Settings.Default.Save();
                 }
                 catch (Exception ex) { Util.LogError(ex); }
             };
@@ -286,6 +296,8 @@ class MainView : IDisposable
                 try
                 {
                     edtSavedSortString3.Text = System.Windows.Forms.Clipboard.GetText();
+                    Properties.Settings.Default.SavedSortString3 = edtSavedSortString3.Text;
+                    Properties.Settings.Default.Save();
                 }
                 catch (Exception ex) { Util.LogError(ex); }
             };
