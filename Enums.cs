@@ -134,7 +134,8 @@ namespace mudsort
         CritDamRating = 374,
         CritDamResistRating = 375,
         HealBoostRating = 376,
-        VitalityRating = 379
+        VitalityRating = 379,
+        SummoningMastery = 362
     }
     public enum MSBoolValueKey
     {
