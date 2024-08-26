@@ -197,13 +197,12 @@ public class PluginCore : PluginBase
             }
             else if (CURRENT_STATE == State.BUILDING_LIST)
             {
-                String[] sortKeys = MainView.edtSortString.Text.Split(',');
                 System.Collections.ArrayList sortValueList = new System.Collections.ArrayList();
-                for (int i = sortKeys.Length - 1; i >= 0; i--)
+                for (int i = sortFlags.Count - 1; i >= 0; i--)
                 {
+                    SortFlag sf = (SortFlag)sortFlags[i];
                     foreach (WorldObject worldObject in sortList)
                     {
-                        SortFlag sf = SortFlag.decode(sortKeys[i]);
                         String sortMetric = sf.valueOf(worldObject);
                         if (!sortValueList.Contains(sortMetric))
                         {
@@ -212,7 +211,7 @@ public class PluginCore : PluginBase
                     }
                     sortValueList.Sort(new AlphanumComparator());
                     System.Collections.ArrayList newSortList = new System.Collections.ArrayList();
-                    if (!(sortKeys[i].Length == 3 && sortKeys[i].Substring(2, 1).Equals("-")))
+                    if (sf.descending)
                     {
                         sortValueList.Reverse();
                     }
@@ -220,7 +219,7 @@ public class PluginCore : PluginBase
                     {
                         foreach (WorldObject worldObject in sortList)
                         {
-                            String sortMetric = SortFlag.decode(sortKeys[i]).valueOf(worldObject);
+                            String sortMetric = sf.valueOf(worldObject);
                             if (sortMetric.Equals(sortValue))
                             {
                                 newSortList.Add(worldObject);
@@ -403,7 +402,7 @@ public class PluginCore : PluginBase
             }
 
         }
-        MainView.edtSortString.Text = sortFlagListToString();
+        //MainView.edtSortString.Text = sortFlagListToString();
     }
 
     public void setDestContainer()
@@ -476,7 +475,7 @@ public class PluginCore : PluginBase
     {
         msCommand = msCommand.ToLower().Trim();
 
-        if (msCommand.StartsWith("/ms help"))
+        if (msCommand.StartsWith("/ms help") || msCommand.Equals("/ms"))
         {
             Util.WriteToChat("listing help / commands...");
             Util.WriteToChat("/ms start - start sorting");

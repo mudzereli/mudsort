@@ -90,7 +90,7 @@ It will really save you a lot of time!
 </dl>
 
 ## Commands
-- `/ms help` -- lists commands
+- `/ms help` or just `/ms` -- lists commands
 - `/ms start` -- start sorting
 - `/ms set source (pack <1-8>|player|<containerID>)` -- set source container to: pack 1-8, player, given containerID, or selection (no argument)
 - `/ms set dest (pack <1-8>|player|<containerID>)` -- set destination container to: pack 1-8, player, given containerID, or selection (no argument)
