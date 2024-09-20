@@ -1,0 +1,2530 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Decal.Adapter</name>
+    </assembly>
+    <members>
+        <member name="T:Decal.Adapter.IDQueue.FairIDQueue">
+            <summary>
+            An IDQueue that is fair with respect to plugins and round-robin with respect to ID requests.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.IDQueue.FairIDQueue.AddToQueue(System.Int32)">
+            <summary>
+            Adds a request to the queue.
+            </summary>
+            <param name="lObjectID">The game object ID to identify.</param>
+        </member>
+        <member name="M:Decal.Adapter.IDQueue.FairIDQueue.AddToQueue(System.Int32,System.DateTime)">
+            <summary>
+            Adds a request to the queue with a timeout time.
+            Note: if something else requests this ID while this request is still pending,
+            the later of the two timeouts will prevail.
+            </summary>
+            <param name="lObjectID">The game object ID to identify.</param>
+            <param name="pTimeout"></param>
+        </member>
+        <member name="M:Decal.Adapter.IDQueue.FairIDQueue.ShortcircuitID(System.Int32)">
+            <summary>
+            Send an ID request which bypasses the queue.
+            This is used when the user manually requests an ID. Only one object
+            at a time can be pending here.
+            </summary>
+            <param name="lObjectID">The game object ID to identify.</param>
+        </member>
+        <member name="T:Decal.Adapter.IDQueue.FairRoundRobinScheduleQueue`2">
+            <summary>
+            A scheduler: callers request actions. Multiple callers can request the same action.
+            -Each caller gets one action, then the other callers get a turn.
+            -If a new caller arrives, it is given priority in the turns list.
+            -Everytime a caller gets a turn, it selects its next available action in round-robin fashion.
+            -If all of a caller's actions are unavailable when it is that caller's turn, its turn is lost and it must wait in line again.
+            -If no caller can take a turn, the null action is returned.
+            Thus if multiple callers request the same action, it will be tried more often
+            since the attempt will occur during the turns of multiple callers.
+            </summary>
+            <typeparam name="CALLERTYPE"></typeparam>
+            <typeparam name="ACTIONTYPE"></typeparam>
+        </member>
+        <member name="M:Decal.Adapter.IDQueue.FairRoundRobinScheduleQueue`2.#ctor(System.Int32,`1)">
+            <summary>
+            
+            </summary>
+            <param name="pMaximumTryCount">The most times an action can be attempted before it fails.</param>
+            <param name="pNullAction">An ACTIONTYPE to return when no action is available.</param>
+        </member>
+        <member name="M:Decal.Adapter.FilterBase.SetHost(Decal.Adapter.Wrappers.NetServiceHost)">
+            <summary>
+            Used for internal wiring up of base-class variables.
+            Called by FilterProxy
+            </summary>
+            <param name="newHost">Host (pluginsite) object</param>
+        </member>
+        <member name="T:Decal.Adapter.DecalExtensionType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.ExtensionEvents">
+            <summary>
+            Sorts of events to be fired by the PluginProxy
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Extension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.PluginBase">
+            <summary>
+            Base class used to create Decal Plugins
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.PluginBase.#ctor">
+            <summary>
+            Default Constructor for the Base class. Should be called by all decendants. 
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.PluginBase.Wireup">
+            <summary>
+            Called by the base class to Wire Up events. 
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.PluginBase.UnWire">
+            <summary>
+            Called by the base class to Unwire events
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.PluginBase.SetHost(Decal.Adapter.Wrappers.PluginHost)">
+            <summary>
+            Used for internal wiring up of base-class variables.
+            Called by PluginProxy
+            </summary>
+            <param name="newHost">Host (pluginsite) object</param>
+        </member>
+        <member name="P:Decal.Adapter.PluginBase.Host">
+            <summary>
+            Wrapper Object to the Host. 
+            Similar to IPluginSite
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.PluginBase.LoadView(System.String,System.String)">
+            <summary>
+            Loads a new view into the internal list (should only be called internally)
+            </summary>
+            <param name="name">view name</param>
+            <param name="resource">resource path</param>
+        </member>
+        <member name="M:Decal.Adapter.PluginBase.GetView(System.String)">
+            <summary>
+            Retrieves a view from the internal list
+            </summary>
+            <param name="name">view name</param>
+            <returns>the specified view or null</returns>
+        </member>
+        <member name="P:Decal.Adapter.PluginBase.DefaultView">
+            <summary>
+            The Default view
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.PluginBase.BindingFlags">
+            <summary>
+            BindingFlags for internal scanning
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Messages.AdapterMessageResponseEventArgs">
+            <summary>
+            Defines a response to a message request
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Messages.AdapterMessageResponseEventArgs.#ctor(System.Boolean)">
+            <summary>
+            Create a new AdapterMessageResponse
+            </summary>
+            <param name="success">Did these actions succeed?</param>
+        </member>
+        <member name="P:Decal.Adapter.Messages.AdapterMessageResponseEventArgs.Succeeded">
+            <summary>
+            Whether or not the actions take due to the message succeeded
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Messages.AdapterMessageResponseEventArgs.Complete">
+            <summary>
+            Whether or not all handlers have completed processing
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Messages.AdapterMessageEventArgs">
+            <summary>
+            The base from which Adapter messages derive
+            </summary>
+        </member>
+        <member name="E:Decal.Adapter.Messages.AdapterMessageEventArgs.MessageComplete">
+            <summary>
+            Fires for each handler that completes processing of the message
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Messages.AdapterMessageEventArgs.AddHandler(System.Object)">
+            <summary>
+            Acknowledges that the object intends to process the message
+            </summary>
+            <param name="obj">The object that will do the processing</param>
+        </member>
+        <member name="M:Decal.Adapter.Messages.AdapterMessageEventArgs.SetComplete(System.Object,Decal.Adapter.Messages.AdapterMessageResponseEventArgs)">
+            <summary>
+            Signals completion of message processing
+            </summary>
+            <param name="handler">The object that handled the message</param>
+            <param name="e">The message response</param>
+        </member>
+        <member name="T:Decal.Adapter.NetParser.MessageFactory">
+            <summary>
+            Decal Message Factory Implementation
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageFactory.#ctor">
+            <summary>
+            Construct a new MessageFacytory instance
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageFactory.Decal#Interop#Net#IMessageFactory#CreateMessage(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Creates an IMessage2 instance from the provided raw packet data
+            </summary>
+            <param name="pData">Pointer to the raw packet bytes</param>
+            <param name="size">Size of pData in bytes</param>
+            <param name="outgoing">Packet direction</param>
+            <returns>IMessage2 instance to navigate the packet</returns>
+        </member>
+        <member name="T:Decal.Adapter.NetParser.MessageRootImpl">
+            <summary>
+            IMessageIterator base implementation
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.NetParser.MessageWrapper">
+            <summary>
+            IMessage2 Implementation
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageWrapper.#ctor">
+            <summary>
+            Public constructor...
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageWrapper.#ctor(Decal.Adapter.Message)">
+            <summary>
+            Internal constructor to wrap the Adapter parser
+            </summary>
+            <param name="msg">Adapter Message instance</param>
+        </member>
+        <member name="P:Decal.Adapter.NetParser.MessageWrapper.Begin">
+            <summary>
+            Return an IMessageIterator instance for this packet
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.NetParser.MessageWrapper.Count">
+            <summary>
+            Return the number of items within this structure
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.NetParser.MessageWrapper.RawData">
+            <summary>
+            Return the raw bytes of this structure
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.NetParser.MessageWrapper.Type">
+            <summary>
+            Return the message type
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageWrapper.get_FieldName(System.Int32)">
+            <summary>
+            Get the field name for the specified index
+            </summary>
+            <param name="Index">message member index</param>
+            <returns>field name</returns>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageWrapper.get_RawValue(System.Object)">
+            <summary>
+            Return the raw bytes for the specified member
+            </summary>
+            <param name="vElement">Member index (string or int)</param>
+            <returns>Byte array containing the member data</returns>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageWrapper.get_Struct(System.Object)">
+            <summary>
+            Return the specified member struct
+            </summary>
+            <param name="vElement">Member index (string or int)</param>
+            <returns>Member data</returns>
+        </member>
+        <member name="M:Decal.Adapter.NetParser.MessageWrapper.get_Value(System.Object)">
+            <summary>
+            Return the specified member data
+            </summary>
+            <param name="vElement">Member index (string or int)</param>
+            <returns>Member data</returns>
+        </member>
+        <member name="T:Decal.Adapter.PluginProxy">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.CoreManager">
+            <summary>
+            Lifetime Service required for the .NET Surrogate to function. 
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.ServiceRunning">
+            <summary>
+            Returns if the service was initialized by Decal. 
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.Current">
+            <summary>
+            Returns the Singleton instance of the Service
+            (Initializes if necessary)
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.TracingLevel">
+            <summary>
+            Tracing level for Decal.Adapter, and all loaded plugins. 
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.FileService">
+            <summary>
+            FileService (Decal.FileService)
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.HotkeySystem">
+            <summary>
+            Decal Hotkey System
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.CharacterFilter">
+            <summary>
+            Character Filter
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.CoreManager.EchoFilter">
+            <summary>
+            Direct3D Service
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.CoreManager.QueryKeyBoardMap(System.String)">
+            <summary>
+            Get Mapped Keyboard Key
+            </summary>
+            <param name="name">Name to retrive mapping for. </param>
+            <returns>Mapped Key</returns>
+        </member>
+        <member name="M:Decal.Adapter.CoreManager.Assembly(System.String,System.String)">
+            <summary>
+            Load the Assembly requested, first checking our internal cache
+            </summary>
+            <param name="name">Assembly name to load</param>
+            <param name="path">Path to the assembly</param>
+            <returns>Loaded Assembly, from cache if already loaded</returns>
+        </member>
+        <member name="T:Decal.Adapter.Surrogate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.MessageDirection">
+            <summary>
+            Message Direction
+            </summary>
+        </member>
+        <member name="F:Decal.Adapter.MessageDirection.Inbound">
+            <summary>
+            Server to Client message
+            </summary>
+        </member>
+        <member name="F:Decal.Adapter.MessageDirection.Outbound">
+            <summary>
+            Client to Server message
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Message">
+            <summary>
+            Protocol Message Data
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Message.Name(System.Int32)">
+            <summary>
+            Return the field name for the specified index
+            </summary>
+            <param name="index">Field index</param>
+            <returns>Name of the field</returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.Name(System.String)">
+            <summary>
+            Returns the passed in value?
+            </summary>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.Struct(System.Int32)">
+            <summary>
+            Returns the specified child structure
+            </summary>
+            <param name="index">Field index</param>
+            <returns>MessageStruct for the specified field</returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.Struct(System.String)">
+            <summary>
+            Returns the specified child structure
+            </summary>
+            <param name="name">Field name</param>
+            <returns>MessageStruct for the specified field</returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.Value``1(System.Int32)">
+            <summary>
+            Returns the specified field value
+            </summary>
+            <typeparam name="FieldType">Type of the field</typeparam>
+            <param name="index">Field index</param>
+            <returns>Field value cast to the specified FieldType</returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.Value``1(System.String)">
+            <summary>
+            Returns the specified field value
+            </summary>
+            <typeparam name="FieldType">Type of the field</typeparam>
+            <param name="name">Field name</param>
+            <returns>Field value cast to the specified FieldType</returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.RawValue(System.Int32)">
+            <summary>
+            Returns the raw bytes of the specified field
+            </summary>
+            <param name="index">Field index</param>
+            <returns>Raw field value</returns>
+        </member>
+        <member name="M:Decal.Adapter.Message.RawValue(System.String)">
+            <summary>
+            Returns the raw bytes of the specified field
+            </summary>
+            <param name="name">Field name</param>
+            <returns>Raw field value</returns>
+        </member>
+        <member name="P:Decal.Adapter.Message.Type">
+            <summary>
+            Message Type
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Message.Count">
+            <summary>
+            Returns the number of fields (or vector length)
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Message.Item(System.Int32)">
+            <summary>
+            Returns the specified field data
+            </summary>
+            <param name="index">Field index</param>
+            <returns>Field value</returns>
+        </member>
+        <member name="P:Decal.Adapter.Message.Item(System.String)">
+            <summary>
+            Returns the specified field data
+            </summary>
+            <param name="name">Field name</param>
+            <returns>Field value</returns>
+        </member>
+        <member name="P:Decal.Adapter.Message.RawData">
+            <summary>
+            Returns the raw bytes for this field
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Message.Next">
+            <summary>
+            Returns the next object in the (parent) vector
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Message.Parent">
+            <summary>
+            Returns the parent field
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.MessageStruct">
+            <summary>
+            Represents Message data
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.Name(System.Int32)">
+            <summary>
+            Return the field name for the specified index
+            </summary>
+            <param name="index">Field index</param>
+            <returns>Name of the field</returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.Name(System.String)">
+            <summary>
+            Returns the passed in value?
+            </summary>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.Struct(System.Int32)">
+            <summary>
+            Returns the specified child structure
+            </summary>
+            <param name="index">Field index</param>
+            <returns>MessageStruct for the specified field</returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.Struct(System.String)">
+            <summary>
+            Returns the specified child structure
+            </summary>
+            <param name="name">Field name</param>
+            <returns>MessageStruct for the specified field</returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.Value``1(System.Int32)">
+            <summary>
+            Returns the specified field value
+            </summary>
+            <typeparam name="FieldType">Type of the field</typeparam>
+            <param name="index">Field index</param>
+            <returns>Field value cast to the specified FieldType</returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.Value``1(System.String)">
+            <summary>
+            Returns the specified field value
+            </summary>
+            <typeparam name="FieldType">Type of the field</typeparam>
+            <param name="name">Field name</param>
+            <returns>Field value cast to the specified FieldType</returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.RawValue(System.Int32)">
+            <summary>
+            Returns the raw bytes of the specified field
+            </summary>
+            <param name="index">Field index</param>
+            <returns>Raw field value</returns>
+        </member>
+        <member name="M:Decal.Adapter.MessageStruct.RawValue(System.String)">
+            <summary>
+            Returns the raw bytes of the specified field
+            </summary>
+            <param name="name">Field name</param>
+            <returns>Raw field value</returns>
+        </member>
+        <member name="P:Decal.Adapter.MessageStruct.Count">
+            <summary>
+            Returns the number of fields (or vector length)
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.MessageStruct.Item(System.Int32)">
+            <summary>
+            Returns the specified field data
+            </summary>
+            <param name="index">Field index</param>
+            <returns>Field value</returns>
+        </member>
+        <member name="P:Decal.Adapter.MessageStruct.Item(System.String)">
+            <summary>
+            Returns the specified field data
+            </summary>
+            <param name="name">Field name</param>
+            <returns>Field value</returns>
+        </member>
+        <member name="P:Decal.Adapter.MessageStruct.RawData">
+            <summary>
+            Returns the raw bytes for this field
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.MessageStruct.Next">
+            <summary>
+            Returns the next object in the (parent) vector
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.MessageStruct.Parent">
+            <summary>
+            Returns the parent field
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.ViewBaseAttribute.ViewName">
+            <summary>
+            Name named attribute
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.ViewAttribute">
+            <summary>
+            Defines a plugin view
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.ViewAttribute.#ctor(System.String)">
+            <summary>
+            Constructs a new view from the specified resource
+            </summary>
+            <param name="Resource">Embedded resource path</param>
+        </member>
+        <member name="P:Decal.Adapter.ViewAttribute.Resource">
+            <summary>
+            The resource to load
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.ControlReferenceAttribute">
+            <summary>
+            ControlReference AutoWireup
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.ControlReferenceAttribute.#ctor(System.String)">
+            <summary>
+            Construct a new ControlReference
+            </summary>
+            <param name="control">Control to reference</param>
+        </member>
+        <member name="P:Decal.Adapter.ControlReferenceAttribute.Control">
+            <summary>
+            The Control Name
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.ControlReferenceArrayAttribute">
+            <summary>
+            ControlReferenceArray AutoWireup
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.ControlReferenceArrayAttribute.#ctor(System.String[])">
+            <summary>
+            Constructs a new ControlReference array
+            </summary>
+            <param name="controls">Names of the controls to put in the array</param>
+        </member>
+        <member name="P:Decal.Adapter.ControlReferenceArrayAttribute.Controls">
+            <summary>
+            Control collection
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.ControlEventAttribute">
+            <summary>
+            ControlEvent AutoWireup
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.ControlEventAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Constructs the ControlEvent
+            </summary>
+            <param name="control">Control Name</param>
+            <param name="controlEvent">Event to Wire</param>
+        </member>
+        <member name="P:Decal.Adapter.ControlEventAttribute.Control">
+            <summary>
+            Control Name
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.ControlEventAttribute.EventName">
+            <summary>
+            Event to Wire
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.NewD3DObj">
+            <summary>
+            Makes a new D3DObj
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.PointToObject(System.Int32,System.Int32)">
+            <summary>
+            Creates an arrow that points to an object
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="color">Color</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.PointToCoords(System.Single,System.Single,System.Single,System.Int32)">
+            <summary>
+            Creates an arrow that points to specified Coordinates
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="color">Color</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkObjectWithIcon(System.Int32,System.Int32)">
+            <summary>
+            Mark an Object with an Icon
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="icon">Portal.dat Icon</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkObjectWithShape(System.Int32,Decal.Adapter.Wrappers.D3DShape,System.Int32)">
+            <summary>
+            Mark an Object with a Shape
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="shape">D3DShape</param>
+            <param name="color">Color</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkObjectWithShapeFromFile(System.Int32,System.String,System.Int32)">
+            <summary>
+            Mark an Object with a Shape
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="filename">Mesh filename</param>
+            <param name="color">Color</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkObjectWith2DText(System.Int32,System.String,System.String,System.Int32)">
+            <summary>
+            Mark an Object with 2DText
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="szText">Text</param>
+            <param name="szFont">Font</param>
+            <param name="options">zero or more option flags from DecalPlugins::eFontOptions</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkObjectWith3DText(System.Int32,System.String,System.String,System.Int32)">
+            <summary>
+            Mark an Object with 3DText
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="szText">Text</param>
+            <param name="szFont">Font</param>
+            <param name="options">zero or more option flags from DecalPlugins::eFontOptions</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkCoordsWithIcon(System.Single,System.Single,System.Single,System.Int32)">
+            <summary>
+            Mark specified Coordinates with Icon
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="icon">Portal.dat Icon</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkCoordsWithIconFromFile(System.Single,System.Single,System.Single,System.String)">
+            <summary>
+            Mark specified Coordinates with Icon
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="file">Icon filename</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkCoordsWithShape(System.Single,System.Single,System.Single,Decal.Adapter.Wrappers.D3DShape,System.Int32)">
+            <summary>
+            Mark specified Coordinates with Shape
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="shape">D3DShape</param>
+            <param name="color">Color</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkCoordsWithShapeFromFile(System.Single,System.Single,System.Single,System.String,System.Int32)">
+            <summary>
+            Mark specified Coordinates with Shape
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="file">Mesh filename</param>
+            <param name="color">Color</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkCoordsWith2DText(System.Single,System.Single,System.Single,System.String,System.String,System.Int32)">
+            <summary>
+            Mark specified Coordinates with 2DText
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="szText">Text</param>
+            <param name="szFont">Font</param>
+            <param name="options">zero or more option flags from DecalPlugins::eFontOptions</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DService.MarkCoordsWith3DText(System.Single,System.Single,System.Single,System.String,System.String,System.Int32)">
+            <summary>
+            Mark specified Coordinates with 3DText
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="szText">Text</param>
+            <param name="szFont">Font</param>
+            <param name="options">zero or more option flags from DecalPlugins::eFontOptions</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.OrientToCamera(System.Boolean)">
+            <summary>
+            Orients to the Camera
+            </summary>
+            <param name="VerticalTilt">Vertical Tilt</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.OrientToCoords(System.Single,System.Single,System.Single,System.Boolean)">
+            <summary>
+            Orients to the specified Coordinates
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+            <param name="VerticalTilt">Vertical Tilt</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.OrientToObject(System.Int32,System.Single,System.Boolean)">
+            <summary>
+            Orients to the specified Object
+            </summary>
+            <param name="guid">Object ID</param>
+            <param name="fractHeight">Relative Position</param>
+            <param name="VerticalTilt">Vertical Tilt</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.OrientToPlayer(System.Boolean)">
+            <summary>
+            Orients to the Current Player
+            </summary>
+            <param name="VerticalTilt">Vertical Tilt</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.Anchor(System.Single,System.Single,System.Single)">
+            <summary>
+            Anchors to the specified Coordinates
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <param name="alt">Altitude</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.Anchor(System.Int32,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Anchors to the specified Object
+            </summary>
+            <param name="id">Object ID</param>
+            <param name="height">Height</param>
+            <param name="dx">x offset</param>
+            <param name="dy">y offset</param>
+            <param name="dz">z offset</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetText(System.String)">
+            <summary>
+            Displays 2D text using the Arial font
+            </summary>
+            <param name="text">Text to display</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetText(System.String,System.String)">
+            <summary>
+            Displays 2D text using the specified font
+            </summary>
+            <param name="text">Text to display</param>
+            <param name="fontName">Font to use</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetText(System.String,System.String,System.Int32)">
+            <summary>
+            Displays 2D text using the specified font and options
+            </summary>
+            <param name="text">Text to display</param>
+            <param name="fontName">Font to use</param>
+            <param name="options">Options</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetText(Decal.Adapter.Wrappers.D3DTextType,System.String,System.String,System.Int32)">
+            <summary>
+            Displays text
+            </summary>
+            <param name="type">Type of text (2D/3D)</param>
+            <param name="text">Text to display</param>
+            <param name="fontName">Font to use</param>
+            <param name="options">Options</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetIcon(System.Int32)">
+            <summary>
+            Sets the icon to the portal file id
+            </summary>
+            <param name="id">portal file id</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetIcon(System.String)">
+            <summary>
+            Sets the icon from the specified file
+            </summary>
+            <param name="fileName">file containing the icon</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetIcon(System.Int32,System.Int32)">
+            <summary>
+            Sets the icon from a resource dll
+            </summary>
+            <param name="module">module handle of the dll</param>
+            <param name="res">resource id</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetShape(Decal.Adapter.Wrappers.D3DShape)">
+            <summary>
+            Sets the shape to that specified
+            </summary>
+            <param name="shape">Shape to use</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetShape(System.String)">
+            <summary>
+            Sets the shape to that contained in the file
+            </summary>
+            <param name="fileName">File containing the shape definition</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.D3DObj.SetShape(System.Int32,System.Int32)">
+            <summary>
+            Sets the shape from a resource dll
+            </summary>
+            <param name="module">module handle of the dll</param>
+            <param name="res">resource id</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.Color">
+            <summary>
+            Colors
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.Autoscale">
+            <summary>
+            Autoscale
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.DrawBackface">
+            <summary>
+            DrawBackface
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.HBounce">
+            <summary>
+            HBounce
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.PBounce">
+            <summary>
+            PBounce
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.PFade">
+            <summary>
+            PFade
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.POrbit">
+            <summary>
+            POrbit
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.PSpin">
+            <summary>
+            PSpin
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.ROrbit">
+            <summary>
+            ROrbit
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.ScaleX">
+            <summary>
+            ScaleX
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.ScaleY">
+            <summary>
+            ScaleY
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.ScaleZ">
+            <summary>
+            ScaleZ
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.Visible">
+            <summary>
+            Visible
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.D3DObj.AnimationPhaseOffset">
+            <summary>
+            AnimationPhaseOffset
+            </summary>
+        </member>
+        <member name="E:Decal.Adapter.Wrappers.EchoFilter2.ServerDispatch">
+            <summary>
+            Fires when the client receives a message from the server
+            </summary>
+        </member>
+        <member name="E:Decal.Adapter.Wrappers.EchoFilter2.ClientDispatch">
+            <summary>
+            Fires when the client sends a message to the server
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByAllFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for all objects
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByInventoryFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for inventory objects
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByLandscapeFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for landscape objects
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByContainerFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for objects in a container
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByContainerFilter.#ctor">
+            <summary>
+            Creates a new filter
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByContainerFilter.#ctor(System.Int32)">
+            <summary>
+            Creates a new filter using the specified container
+            </summary>
+            <param name="container">Id of the container</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.ByContainerFilter.Container">
+            <summary>
+            Id of the container filtered by
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByOwnerFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for all objects owned by a character
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByOwnerFilter.#ctor">
+            <summary>
+            Creates a new filter
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByOwnerFilter.#ctor(System.Int32)">
+            <summary>
+            Creates a new filter using the specified owner
+            </summary>
+            <param name="owner">Id of the owner</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.ByOwnerFilter.Owner">
+            <summary>
+            Id of the owner of the objects
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByCategoryFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for objects having the same category
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByCategoryFilter.#ctor">
+            <summary>
+            Creates a new filter
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByCategoryFilter.#ctor(System.Int32)">
+            <summary>
+            Creates a new filter using the specified category
+            </summary>
+            <param name="category">Category to filter by</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.ByCategoryFilter.Category">
+            <summary>
+            Category of the items in this collection
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByObjectClassFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for objects of the same type/class
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByObjectClassFilter.#ctor">
+            <summary>
+            Creates a new filter
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByObjectClassFilter.#ctor(Decal.Adapter.Wrappers.ObjectClass)">
+            <summary>
+            Creates a new filter using the specified ObjectClass
+            </summary>
+            <param name="objClass">Class of the items</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.ByObjectClassFilter.ObjectClass">
+            <summary>
+            Class of the items in this collection
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByNameFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for objects having the specified name
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByNameFilter.#ctor">
+            <summary>
+            Creates a new filter
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ByNameFilter.#ctor(System.String)">
+            <summary>
+            Creates a new filter using the specified name
+            </summary>
+            <param name="name">Name of the object</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.ByNameFilter.Name">
+            <summary>
+            Name of the objects in this collection
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ByNameSubStringFilter">
+            <summary>
+            Defines the WorldObjectCollection filter for objects containing the specified name
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.Vendor.SetFilter(Decal.Adapter.Wrappers.WorldObjectCollectionFilter)">
+            <summary>
+            Apply a filter to this collection to limit what it returns
+            </summary>
+            <param name="filter">filter object</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.MerchantId">
+            <summary>
+            The indentifier for this merchant
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.MaxValue">
+            <summary>
+            The maximum value of an item this vendor will purchase
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.SellRate">
+            <summary>
+            The rate at which this vendor sells items
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.BuyRate">
+            <summary>
+            The rate at which this vendor buys items
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.Categories">
+            <summary>
+            The item categories that this vendor buys
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.Count">
+            <summary>
+            Returns the number of items in the collection
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Vendor.Quantity">
+            <summary>
+            Returns the number of items represented by the collection, taking into account stacks of items.
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.WorldObjectCollection">
+            <summary>
+            Defines a collection of WorldObjects
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObjectCollection.SetFilter(Decal.Adapter.Wrappers.WorldObjectCollectionFilter)">
+            <summary>
+            Apply a filter to this collection to limit what it returns
+            </summary>
+            <param name="filter">filter object</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.WorldObjectCollection.Count">
+            <summary>
+            Returns the number of items in the collection
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.WorldObjectCollection.Quantity">
+            <summary>
+            Returns the number of items represented by the collection, taking into account stacks of items.
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.WorldObject">
+            <summary>
+            Defines an object in the world
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.ActiveSpell(System.Int32)">
+            <summary>
+            Gets the spell ID of one of the active spells on this object.
+            </summary>
+            <param name="index">The index in the list of active spells.</param>
+            <returns>The spell ID.</returns>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.WorldObject.ActiveSpellCount">
+            <summary>
+            Gets the number of active spells on this object.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.BoolValueKey)">
+            <summary>
+            Determines whether this object has the specified property.
+            </summary>
+            <param name="index">The property to check.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.DoubleValueKey)">
+            <summary>
+            Determines whether this object has the specified property.
+            </summary>
+            <param name="index">The property to check.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.LongValueKey)">
+            <summary>
+            Determines whether this object has the specified property.
+            </summary>
+            <param name="index">The property to check.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.StringValueKey)">
+            <summary>
+            Determines whether this object has the specified property.
+            </summary>
+            <param name="index">The property to check.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.BoolValueKey,System.Boolean@)">
+            <summary>
+            Gets the value of the specified property, if it exists.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="pValue">Set to the value of the property, if it exists.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.DoubleValueKey,System.Double@)">
+            <summary>
+            Gets the value of the specified property, if it exists.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="pValue">Set to the value of the property, if it exists.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.LongValueKey,System.Int32@)">
+            <summary>
+            Gets the value of the specified property, if it exists.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="pValue">Set to the value of the property, if it exists.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Exists(Decal.Adapter.Wrappers.StringValueKey,System.String@)">
+            <summary>
+            Gets the value of the specified property, if it exists.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="pValue">Set to the value of the property, if it exists.</param>
+            <returns><c>true</c> if this object has the specified property.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.BoolValueKey)">
+            <summary>
+            Gets the value of the specified property, or <c>false</c> if this 
+            object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.DoubleValueKey)">
+            <summary>
+            Gets the value of the specified property, or <c>0.0</c> if this 
+            object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.LongValueKey)">
+            <summary>
+            Gets the value of the specified property, or <c>0</c> if this 
+            object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.StringValueKey)">
+            <summary>
+            Gets the value of the specified property, or <c>""</c> if this 
+            object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.BoolValueKey,System.Boolean)">
+            <summary>
+            Gets the value of the specified property, or <c>defaultValue</c> 
+            if this object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="defaultValue">The value to return if this object 
+            	doesn't have the property.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.DoubleValueKey,System.Double)">
+            <summary>
+            Gets the value of the specified property, or <c>defaultValue</c> 
+            if this object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="defaultValue">The value to return if this object 
+            	doesn't have the property.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.LongValueKey,System.Int32)">
+            <summary>
+            Gets the value of the specified property, or <c>defaultValue</c> 
+            if this object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="defaultValue">The value to return if this object 
+            	doesn't have the property.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Values(Decal.Adapter.Wrappers.StringValueKey,System.String)">
+            <summary>
+            Gets the value of the specified property, or <c>defaultValue</c> 
+            if this object doesn't have the property.
+            </summary>
+            <param name="index">The property to get.</param>
+            <param name="defaultValue">The value to return if this object 
+            	doesn't have the property.</param>
+            <returns>The property's value.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Coordinates">
+            <summary>
+            Gets the coordinates of this object, or <c>null</c> if this 
+            object doesn't have coordinates (if it's in a container, etc.)
+            </summary>
+            <returns>The coordinates of this object, or <c>null</c> if this 
+            	object doesn't have coordinates.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Offset">
+            <summary>
+            Gets this object's current offset in its landblock, or <c>null</c>
+            if this object doesn't have an offset (if it's in a container, etc.)
+            </summary>
+            <returns>The offset of this object, or <c>null</c> if this object
+            	doesn't have an offset.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Orientation">
+            <summary>
+            Gets a quaternion representing the orientation of this object, or 
+            <c>null</c> if this object doesn't have an orientation (if it's in 
+            a container, etc.)
+            </summary>
+            <returns>The orientation of this object, or <c>null</c> if this 
+            	object doesn't have an orientation.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.RawCoordinates">
+            <summary>
+            Gets the raw coordinates of this object, or <c>null</c> if this 
+            object doesn't have coordinates (if it's in a container, etc.)
+            </summary>
+            <returns>The raw coordinates of this object, or <c>null</c> if this 
+            	object doesn't have coordinates.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldObject.Spell(System.Int32)">
+            <summary>
+            Gets the spell ID of one of the spells that this object casts.
+            </summary>
+            <param name="index">The index in the list of spells.</param>
+            <returns>The spell ID.</returns>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.WorldObject.SpellCount">
+            <summary>
+            Gets the number of spells that this object casts.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.GetObject(System.String)">
+            <summary>
+            Function to get a COM object by path from Decal. 
+            </summary>
+            <param name="path">The decal services path to resolve the COM object</param>
+            <returns>instance of the object requested</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.GetKeyboardMapping(System.String)">
+            <summary>
+            Get Mapped Keyboard Key
+            </summary>
+            <param name="name">Name to retrive mapping for. </param>
+            <returns>Mapped Key</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.LoadViewHandler(Decal.Adapter.Wrappers.IViewHandler)">
+            <summary>
+            Initializes an already exisint viewhandler (plugins)
+            </summary>
+            <param name="handler">the handler to init</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.LoadViewHandler(System.Type)">
+            <summary>
+            Load a view handler of the specified type
+            </summary>
+            <param name="handlerType">type of handler to load</param>
+            <returns>the new handler</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.LoadViewResource(System.String)">
+            <summary>
+            Load a view in the current assembly using the specified resource
+            </summary>
+            <param name="resourcePath">path of the embedded view xml resource</param>
+            <returns>the new view</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.LoadViewResource(System.String,System.Reflection.Assembly)">
+            <summary>
+            Load a view in the specified assembly using the specified resource
+            </summary>
+            <param name="resourcePath">path of the embedded view xml resource</param>
+            <param name="resourceAssembly">assembly containing the resource</param>
+            <returns>the new view</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.LoadView(System.Xml.XmlElement)">
+            <summary>
+            Load a view from the specified XML element
+            </summary>
+            <param name="viewSchema">XmlElement containing the view schema</param>
+            <returns>the new view</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.LoadView(System.String)">
+            <summary>
+            Load a view from the specified XML string
+            </summary>
+            <param name="viewSchema">string containing the view schema</param>
+            <returns>the new view</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.PluginHost.ComFilter(System.String)">
+            <summary>
+            Get a COM based filter object. 
+            (Similar to GetObject, but requires only ProgID instead of full path)
+            </summary>
+            <param name="progId"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.PluginHost.Decal">
+            <summary>
+            Wrapped Decal OM
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.PluginHost.Actions">
+            <summary>
+            Wrapped version of the ACHooks interface
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.PluginHost.Render">
+            <summary>
+            Wrapped version of the DecalRenderService
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.HookIndexer`1">
+            <summary>
+            Support class for HooksWrapper
+            This class 
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.HooksWrapper">
+            <summary>
+            Provides direct access to functions and properties in the AC client.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.Dispose">
+            <summary>
+            Releases the resources used by this HooksWrapper. <b>No plugin or 
+            filter should use this function!</b>
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddChatText(System.String,System.Int32)">
+            <summary>
+            Adds a line of text to the default chat window for the specified 
+            text color.
+            </summary>
+            <param name="text">The text to add to the chat window.</param>
+            <param name="color">The color ID of the text to add.  This also 
+            determines in which chat window the text will appear, as per the 
+            user's chat settings.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddChatText(System.String,System.Int32,System.Int32)">
+            <summary>
+            Adds a line of text to the specified chat window.
+            </summary>
+            <param name="text">The text to add to the chat window.</param>
+            <param name="color">The color ID of the text to add.</param>
+            <param name="target">The chat window where the text will appear.
+            <para>0 is the default chat window for the given color, 1 is main 
+            chat, and 2-5 are chat tabs #1-4, respectively.</para></param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddChatTextRaw(System.String,System.Int32)">
+            <summary>
+            Adds text to the default chat window for the specified text color.
+            </summary>
+            <param name="text">The text to add to the chat window.</param>
+            <param name="color">The color ID of the text to add.  This also 
+            determines in which chat window the text will appear, as per the 
+            user's chat settings.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddChatTextRaw(System.String,System.Int32,System.Int32)">
+            <summary>
+            Adds text to the specified chat window.
+            </summary>
+            <param name="text">The text to add to the chat window.</param>
+            <param name="color">The color ID of the text to add.</param>
+            <param name="target">The chat window where the text will appear.
+            <para>0 is the default chat window for the given color, 1 is main 
+            chat, and 2-5 are chat tabs #1-4, respectively.</para></param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddStatusText(System.String)">
+            <summary>
+            Adds a red status message to the status area at the top of the 
+            screen.
+            </summary>
+            <param name="text">The status message.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.ApplyItem(System.Int32,System.Int32)">
+            <summary>
+            Uses one item on another (for crafting, etc.)
+            <para>This command will fail if the player is busy using an item, 
+            casting a spell, etc.  If you are using multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            use the next item.</para>
+            </summary>
+            <param name="useThis">The GUID of the item to use.</param>
+            <param name="onThis">The GUID of the target.</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.UseItem(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AutoWield(System.Int32)">
+            <summary>
+            Attempts to wield an item
+            <para>This command will fail if the player is busy using an item, 
+            casting a spell, etc.  If you are using multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            use the next item.</para>
+            </summary>
+            <param name="item">The GUID of the item to use.</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.UseItem(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AutoWield(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Attempts to wield an item
+            <para>This command will fail if the player is busy using an item, 
+            casting a spell, etc.  If you are using multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            use the next item.</para>
+            </summary>
+            <param name="item">The GUID of the item to use.</param>
+            <param name="slot">The slot to use</param>
+            <param name="explic">1 if explicit placement, 0 if automatic placement</param>
+            <param name="notexplic">0 if explic is 1, 1 if explic is 0</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.UseItem(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AutoWield(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Attempts to wield an item
+            <para>This command will fail if the player is busy using an item, 
+            casting a spell, etc.  If you are using multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            use the next item.</para>
+            </summary>
+            <param name="item">The GUID of the item to use.</param>
+            <param name="slot">The slot to use</param>
+            <param name="explic">1 if explicit placement, 0 if automatic placement</param>
+            <param name="notexplic">0 if explic is 1, 1 if explic is 0</param>
+            <param name="zero1">Zero</param>
+            <param name="zero2">Zero</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.UseItem(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.BusyState">
+            <summary>
+            Gets a value indicating how the player is moving an item, or 0 
+            if the player is not moving an item.  There are different values 
+            for moving an item, combining/splitting a stack, picking 
+            up/dropping an item, etc.
+            </summary>
+            <remarks>
+            Here are some known values for <c>BusyState</c>:
+            <para><c>0</c>: Idle.</para>
+            <para><c>1</c>: Combining a stack.</para>
+            <para><c>2</c>: Splitting a stack.</para>
+            <para><c>3</c>: ???</para>
+            <para><c>4</c>: Picking up an item from the ground.</para>
+            <para><c>5</c>: Moving or unequipping an item.</para>
+            <para><c>6</c>: Dropping an item to the ground.</para>
+            <para><c>7</c>: Equipping an item.</para>
+            </remarks>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.BusyStateId">
+            <summary>
+            Gets the GUID of the object that the player is moving, or 0 if the 
+            player is not currently moving any object.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.CastSpell(System.Int32,System.Int32)">
+            <summary>
+            Causes the player to attempt to cast a spell.  The player must be 
+            in spellcasting mode and the spell must be in his spellbook.
+            </summary>
+            <param name="spellId">The ID of the spell to cast.</param>
+            <param name="objectId">The GUID of the target.  This is ignored for 
+            non-targeted spells, such as self spells and ring spells.</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.ChatState">
+            <summary>
+            Returns <c>true</c> if the chat bar at the bottom of the screen 
+            currently has keyboard focus.  Doesn't apply to floating chat 
+            windows.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.CombatMode">
+            <summary>
+            Gets a value indicating the player's combat stance.
+            <para>1 is out of combat mode;
+            2 is melee attack mode;
+            4 is missile attack mode;
+            8 is magic casting mode.</para>
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.CommandInterpreter">
+            <summary>
+            Returns a pointer to the CommandInterpreter object
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.CurrentSelection">
+            <summary>
+            Gets or sets the GUID of the selected item. A GUID of 0 indicates 
+            no item selected.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.DropItem(System.Int32)">
+            <summary>
+            Drop an item from the player's inventory onto the ground.
+            </summary>
+            <param name="objectId">The GUID of the item to drop.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FaceHeading(System.Double,System.Boolean)">
+            <summary>
+            Causes the player to turn to the specified heading.
+            </summary>
+            <param name="heading">The desired heading (in degrees).</param>
+            <param name="bUnknown">Unknown.</param>
+            <returns>Always returns <c>true</c>.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.RadianFaceHeading(System.Double,System.Boolean)">
+            <summary>
+            Causes the player to turn to the specified heading.
+            </summary>
+            <param name="heading">The desired heading (in radians).</param>
+            <param name="bUnknown">Unknown</param>
+            <returns></returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FellowshipRecruit(System.Int32)">
+            <summary>
+            Recruit someone to your fellowship.
+            </summary>
+            <param name="lObjectID">The GUID of the character to recruit.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FellowshipGrantLeader(System.Int32)">
+            <summary>
+            Give fellowship leadership to a player.
+            </summary>
+            <param name="lObjectID">The GUID of the character to become the leader.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FellowshipSetOpen(System.Boolean)">
+            <summary>
+            Opens or closes the fellowship.
+            </summary>
+            <param name="IsOpen">True if the fellowship should be made open, false if it should be made closed.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FellowshipQuit">
+            <summary>
+            Quits the current fellowship.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FellowshipDisband">
+            <summary>
+            Disbands the current fellowship.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.FellowshipDismiss(System.Int32)">
+            <summary>
+            Dismisses another player from the fellowship.
+            </summary>
+            <param name="lObjectID">The GUID of the character to remove from the fellowship.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.GiveItem(System.Int32,System.Int32)">
+            <summary>
+            Gives an object from the player's inventory to another player or 
+            NPC.
+            </summary>
+            <param name="lObject">The GUID of the object to give.</param>
+            <param name="lDestination">The GUID of the player or NPC to receive 
+            the object.</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Heading">
+            <summary>
+            Gets or sets the compass heading of the player (in degrees).  
+            North is 0, East is 90, etc. Setting the heading will cause the 
+            player to turn.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.HeadingRadians">
+            <summary>
+            Gets or sets the compass heading of the player (in radians).  
+            North is 0, East is pi/2, etc. Setting the heading will cause the 
+            player to turn.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.RequestId(System.Int32)">
+            <summary>
+            Adds an identify-request to the end of the request queue.
+            </summary>
+            <param name="objectId">The GUID of the object to request an ID for.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.InvokeChatParser(System.String)">
+            <summary>
+            Sends text to AC's chat parser as if the user had typed the text 
+            into the chat bar.  This text will <i>not</i> be sent to other 
+            plugins via the 
+            <see cref="E:Decal.Adapter.Extension.CommandLineText" /> event, so
+            this function cannot be used to send chat commands to other plugins.
+            </summary>
+            <param name="text">The text to send.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.IsValidObject(System.Int32)">
+            <summary>
+            Checks if the AC client knows about an object GUID.  The client 
+            must know about an object for it to be used in other HooksWrapper 
+            functions.
+            </summary>
+            <param name="objectId">The GUID of the object to check.</param>
+            <returns><c>true</c> if the client knows about an object, or 
+            <c>false</c> if not.</returns>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Landcell">
+            <summary>
+            Gets the ID of the player's current landcell (a.k.a. landblock).
+            </summary>
+            <remarks>
+            Here is a description of landblocks from 
+            <a href="http://www.ugcs.caltech.edu/~dsimpson/">David Simpson's 
+            Dereth Cartography</a>, from the header comment in his mapac.c
+            <blockquote>
+            The map in Asheron's Call is 254 by 254 landblocks.  Each landblock contains
+            a 9 by 9 grid of data points which makes for an 8 by 8 group of land squares
+            in game.  Each landblock has a unique id, which is a word in length, and
+            has the format xxyyFFFF.  In game, xx is the east-west position, and yy is the
+            north-south position.  Landblock 0000FFFF is located in the southwest corner of
+            the map.  Use /loc to find out which landblock you are on.  Each square in a
+            landblock is 0.1 wide and tall, making each landblock 0.8 by 0.8.  Although
+            each landblock contains 9 by 9 points, the points on the edges are redundant
+            with adjacent landblocks.  The entire map is 2041 by 2041 data points, making
+            2040 by 2040 squares.  Lastly, each square is 24.0 by 24.0 units, whatever
+            they may be.
+            </blockquote>
+            </remarks>
+            <example>
+            This example shows how to calculate coordinates from 
+            <see cref="P:Decal.Adapter.Wrappers.HooksWrapper.Landcell"/>, <see cref="P:Decal.Adapter.Wrappers.HooksWrapper.LocationX"/>, and
+            <see cref="P:Decal.Adapter.Wrappers.HooksWrapper.LocationY"/>.  North and east are positive, south and 
+            west are negative.  Round the result to one decimal place to get 
+            identical coordinates to the ones AC reports.
+            <code><![CDATA[
+            double NS = ((uint)((Host.Actions.Landcell & 0x00FF0000) / 0x2000) + Host.Actions.LocationY / 24.0 - 1019.5) / 10.0;
+            double EW = ((uint)((Host.Actions.Landcell & 0xFF000000) / 0x200000) + Host.Actions.LocationX / 24.0 - 1019.5) / 10.0;
+            
+            string coords = Math.Abs(NS).ToString("0.0") + (NS >= 0 ? "N" : "S") + ", " + Math.Abs(EW).ToString("0.0") + (EW >= 0 ? "E" : "W");
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.LocationX">
+            <summary>
+            Gets the player's X-offset within the current landcell, measured in 
+            meters.  On the landscape, values range from 0 (west side of 
+            landcell) to 192 (east side).  In dungeons, values are unbounded.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.LocationY">
+            <summary>
+            Gets the player's Y-offset within the current landcell, measured in 
+            meters.  On the landscape, values range from 0 (south side of 
+            landcell) to 192 (north side).  In dungeons, values are unbounded.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.LocationZ">
+            <summary>
+            Gets the player's altitude, measured in meters. 0 is sea-level.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.Logout">
+            <summary>
+            Logs out the current character and returns to the character 
+            selection screen.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.MaxSelectedStackCount">
+            <summary>
+            Gets the total number of items in the currently selected stack.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.MoveItem(System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Moves an item to the specified pack in the player's inventory.
+            <para>This command will fail if the player is busy moving an item, 
+            casting a spell, etc.  If you are moving multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            move the next item.</para>
+            </summary>
+            <param name="objectId">The GUID of the object to move.</param>
+            <param name="packId">The GUID of the destination container.</param>
+            <param name="slot">The slot within the pack, where 0 is the first 
+            slot.  If this number is greater than the number of items in the 
+            pack, the object will be placed in the first unused slot in the 
+            pack.</param>
+            <param name="stack">A flag indicating whether to add the object to 
+            a stack in the pack, if one exists.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.MoveItem(System.Int32,System.Int32)">
+            <summary>
+            Moves an item to the front of the specified container.  If the item 
+            is not in the player's inventory, the destination must be the 
+            player's main pack (the GUID of the player), or one of his side 
+            packs.
+            <para>This command will fail if the player is busy moving an item, 
+            casting a spell, etc.  If you are moving multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            move the next item.</para>
+            </summary>
+            <param name="objectId">The GUID of the item to move.</param>
+            <param name="destinationId">The GUID of the destination container.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.MoveItem(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Moves an item to the specified container, with flags indicating 
+            how the move should be performed.
+            <para>This command will fail if the player is busy moving an item, 
+            casting a spell, etc.  If you are moving multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            move the next item.</para>
+            </summary>
+            <param name="objectId">The GUID of the object to move.</param>
+            <param name="destinationId">The GUID of the destination container.</param>
+            <param name="moveFlags">Flags indicating how the move should be 
+            performed.</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.OpenedContainer">
+            <summary>
+            Gets the GUID of the currently opened container, such as a chest or 
+            corpse.  Returns 0 if no container is currently opened.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.PointerState">
+            <summary>
+            Gets the ID of the current mouse pointer graphics.  This number 
+            corresponds to an image in client_portal.dat.
+            </summary>
+            <remarks>
+            Here are some known values of <c>PointerState</c>:
+            <para><c>0x6004D68</c>: Brown idle cursor.</para>
+            <para><c>0x6004D69</c>: Brown idle cursor with yellow outline.</para>
+            <para><c>0x6004D6A</c>: Red combat mode cursor.</para>
+            <para><c>0x6004D6B</c>: Red combat mode cursor with yellow outline.</para>
+            <para><c>0x6004D6C</c>: Blue magic mode cursor.</para>
+            <para><c>0x6004D6D</c>: Blue magic mode cursor with yellow outline.</para>
+            <para><c>0x6004D71</c>: Magnifying glass cursor.</para>
+            <para><c>0x6004D72</c>: Hand cursor.</para>
+            <para><c>0x6004D74</c>: Hour glass cursor.</para>
+            <para><c>0x6004D75</c>: Hour glass cursor with yellow outline.</para>
+            </remarks>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.PreviousSelection">
+            <summary>
+            Gets or sets the GUID of the previously-selected item.  Setting 
+            this will cause the given GUID to be selected when the user 
+            presses the "select previous item" key.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Region3D">
+            <summary>
+            Gets the bounding box of the 3D region in the AC window.  The 3D 
+            region is the area of the window where landscape and characters 
+            are visible.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.RegionWindow">
+            <summary>
+            Gets the bounding box of the entire AC window, including the 2D 
+            parts of the GUI.  This is the resolution set on the settings tab 
+            in AC.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SalvagePanelAdd(System.Int32)">
+            <summary>
+            Adds a salvagable item to the salvage panel.
+            <para>The salvage panel does not need to be open for this command, 
+            but it <i>does</i> need to be open for 
+            <see cref="M:Decal.Adapter.Wrappers.HooksWrapper.SalvagePanelSalvage" />, and opening the salvage panel 
+            after adding items to it will clear the panel.</para>
+            </summary>
+            <param name="objectId">The GUID of the object to add.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SalvagePanelSalvage">
+            <summary>
+            Salvages the items in the salvage panel.  The salvage panel must 
+            be open.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SelectItem(System.Int32)">
+            <summary>
+            Selects an item.
+            </summary>
+            <param name="objectId">The GUID of the object to select, or 0 to 
+            clear the current selection.</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.SelectedStackCount">
+            <summary>
+            Gets or sets the number of items in the currently selected stack.
+            Must be between 1 and <see cref="P:Decal.Adapter.Wrappers.HooksWrapper.MaxSelectedStackCount" />.  If 
+            this is less than <see cref="P:Decal.Adapter.Wrappers.HooksWrapper.MaxSelectedStackCount" />, then 
+            moving the current selection will split the stack.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SetAutorun(System.Boolean)">
+            <summary>
+            Turns player's autorun on or off.
+            </summary>
+            <param name="on"><c>true</c> to turn on autorun; 
+            <c>false</c> to turn it off.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SetCombatMode(Decal.Adapter.Wrappers.CombatState)">
+            <summary>
+            Attempts to put the player in the specified combat stance. The 
+            player must be wielding the proper weapon type (melee, bow, 
+            magic caster) for the given combat stance.
+            </summary>
+            <param name="newMode">The desired combat stance.
+            <para>1 is out of combat mode;
+            2 is melee attack mode;
+            4 is missile attack mode;
+            8 is magic casting mode.</para></param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SetCursorPosition(System.Int32,System.Int32)">
+            <summary>
+            Moves the mouse cursor to the given coordinates, relative to the 
+            AC window.
+            </summary>
+            <param name="x">The X-coordinate.</param>
+            <param name="y">The Y-coordinate.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SetIdleTime(System.Double)">
+            <summary>
+            Sets the amount of time that the player can be idle (no mouse or 
+            keyboard input) before AC automatically logs out.  The default 
+            value is 1200 seconds (20 minutes).
+            </summary>
+            <param name="timeout">The idle timeout (in seconds).</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SpellTabAdd(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Adds a spell to the specified tab on the player's spell bar.  The 
+            spell must be in the player's spell book.  Each spell tab can 
+            contain only one copy of each spell.  Putting a spell onto a tab 
+            that already contains that spell will just move the spell to the 
+            new index.
+            </summary>
+            <remarks>
+            This function does not always work if you call it multiple times 
+            in a loop.  Consider putting the loop in the 
+            <see cref="E:System.Windows.Forms.Timer.Tick" /> event of a 
+            <see cref="T:System.Windows.Forms.Timer" />, and then running the 
+            timer for one tick.
+            </remarks>
+            <param name="tab">The zero-based tab index to add the spell.</param>
+            <param name="index">The zero-based slot on the tab to add the spell.
+            If this index is greater than the number of spells on the tab, the 
+            spell will be added to the first unused slot.</param>
+            <param name="spellId">The ID of the spell to be added.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.SpellTabDelete(System.Int32,System.Int32)">
+            <summary>
+            Removes a spell from the specified tab on the player's spell bar. 
+            This function can safely be called multiple times in a row with no 
+            time delay between calls.
+            </summary>
+            <param name="tab">The tab from which to remove the spell.</param>
+            <param name="spellId">The ID of the spell to be removed.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.TradeAccept">
+            <summary>
+            Accepts a trade with another player.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.TradeAdd(System.Int32)">
+            <summary>
+            Adds an object to the trade window with another player.  The object 
+            must be in the player's inventory.
+            </summary>
+            <param name="objectId">The GUID of the object to add.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.PhysicsObject(System.Int32)">
+            <summary>
+            Gets a physics object.
+            </summary>
+            <param name="objectId">The ID of the physics object.</param>
+            <returns>A pointer to a physics object.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.WeenieObject(System.Int32)">
+            <summary>
+            Gets a weenie object.
+            </summary>
+            <param name="objectId">The ID of the weenie object.</param>
+            <returns>A pointer to the weenie object.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.TradeDecline">
+            <summary>
+            Declines (un-accepts) a trade with another player.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.TradeReset">
+            <summary>
+            Clears the contents of the trade window.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.TradeEnd">
+            <summary>
+            Ends the current trade, leaving the trade window open.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.UIElementLookup(Decal.Adapter.Wrappers.UIElementType)">
+            <summary>
+            Gets a UIElement instance.
+            </summary>
+            <param name="TypeID">The TypeID of the UIElement instance.</param>
+            <returns>A pointer to the UIElement instance.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.UIElementMove(Decal.Adapter.Wrappers.UIElementType,System.Int32,System.Int32)">
+            <summary>
+            Sets the position of a UIElement region in the AC window.  
+            </summary>
+            <param name="TypeID">The TypeID of the UIElement instance.</param>
+            <param name="x">The x-axis position the UIElement instance.</param>
+            <param name="y">The y-axis position of the UIElement instance.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.UIElementResize(Decal.Adapter.Wrappers.UIElementType,System.Int32,System.Int32)">
+            <summary>
+            Sets the position of a UIElement region in the AC window.  
+            </summary>
+            <param name="TypeID">The TypeID of the UIElement instance.</param>
+            <param name="width">The width of the UIElement instance.</param>
+            <param name="height">The height of the UIElement instance.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.UIElementRegion(Decal.Adapter.Wrappers.UIElementType)">
+            <summary>
+            Gets the bounding box of a UIElement region in the AC window.  
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.UseItem(System.Int32,System.Int32)">
+            <summary>
+            Uses an item, such as a potion, healing kit, etc.
+            </summary>
+            <remarks>
+            This command will fail if the player is busy using an item, 
+            casting a spell, etc.  If you are using multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            use the next item.
+            </remarks>
+            <param name="objectId">The GUID of the item to use.</param>
+            <param name="useState">The purpose of this argument is not 
+            entirely known.  Valid values appear to be 0 and 1: 0 uses
+            an item by itself (like a potion); 1 uses an item on the current
+            selection.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.UseItem(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Uses an item, such as a potion, healing kit, casts the spell on a
+            wand/orb, etc.
+            </summary>
+            <remarks>
+            This command will fail if the player is busy using an item, 
+            casting a spell, etc.  If you are using multiple items, you must 
+            wait until the previous action is complete before attempting to 
+            use the next item.
+            </remarks>
+            <param name="objectId">The GUID of the item to use.</param>
+            <param name="useState">The purpose of this argument is not 
+            entirely known.  Valid values appear to be 0 and 1: 0 uses
+            an item by itself (like a potion); 1 uses an item on the current
+            selection.</param>
+            <param name="useMethod">The purpose of this argument is not 
+            entirely known.  It may be a target GUID for wand/orb spells, or 
+            some other flag</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.VendorId">
+            <summary>
+            Gets the GUID of the currently open vendor, or 0 if no vendor is 
+            open.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.VendorBuyAll">
+            <summary>
+            Buys all of the items in the buy-list. The player must have 
+            enough pyreals and slots in the main pack to hold all of the items
+            being bought.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.VendorAddBuyList(System.Int32,System.Int32)">
+            <summary>
+            Adds an item to the list of things to buy from a vendor.  A vendor
+            window must be open to use this command.
+            </summary>
+            <param name="templateId">The GUID of the item template or item in 
+            the vendor's inventory.  Templates are the generic items sold by 
+            vendors, such as spell components or trade notes.</param>
+            <param name="count">The number of the specified item to add to the 
+            buy-list.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.VendorClearBuyList">
+            <summary>
+            Clears the buy-list.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.VendorSellAll">
+            <summary>
+            Sells all of the items in the sell-list.  The player must have 
+            enough slots in the main pack to hold all of the stacks of pyreals
+            obtained from the sale.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.VendorAddSellList(System.Int32)">
+            <summary>
+            Adds an item to the list of things to sell to a vendor.  A vendor
+            window must be open, and the item must be in the player's inventory.
+            </summary>
+            <param name="itemId">The GUID of the item to add to the sell-list.</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.VendorClearSellList">
+            <summary>
+            Clears the sell-list.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddSkillExperience(Decal.Adapter.Wrappers.SkillType,System.Int32)">
+            <summary>
+            Spends experience points on a skill.
+            </summary>
+            <param name="skill">The skill to raise.</param>
+            <param name="experience">The number of experience points to spend. 
+            Cannot be more than the player's unspent experience.</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.AddAttributeExperience(Decal.Adapter.Wrappers.AttributeType,System.Int32)"/>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.AddVitalExperience(Decal.Adapter.Wrappers.VitalType,System.Int32)"/>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddAttributeExperience(Decal.Adapter.Wrappers.AttributeType,System.Int32)">
+            <summary>
+            Spends experience points on an attribute.
+            </summary>
+            <param name="attrib">The attribute to raise.</param>
+            <param name="experience">The number of experience points to spend. 
+            Cannot be more than the player's unspent experience.</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.AddSkillExperience(Decal.Adapter.Wrappers.SkillType,System.Int32)"/>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.AddVitalExperience(Decal.Adapter.Wrappers.VitalType,System.Int32)"/>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HooksWrapper.AddVitalExperience(Decal.Adapter.Wrappers.VitalType,System.Int32)">
+            <summary>
+            Spends experience points on a vital.
+            </summary>
+            <param name="vital">The vital to raise.</param>
+            <param name="experience">The number of experience points to spend. 
+            Cannot be more than the player's unspent experience.</param>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.AddAttributeExperience(Decal.Adapter.Wrappers.AttributeType,System.Int32)"/>
+            <seealso cref="M:Decal.Adapter.Wrappers.HooksWrapper.AddSkillExperience(Decal.Adapter.Wrappers.SkillType,System.Int32)"/>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Attribute">
+            <summary>
+            Gets the level an attribute. "Current" values include buffs, 
+            vitae, etc.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.AttributeClicks">
+            <summary>
+            Gets the number of times a attribute has been raised above its
+            starting (innate) level.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.AttributeStart">
+            <summary>
+            Gets the starting (innate) level of an attribute.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.AttributeTotalXP">
+            <summary>
+            Gets the total amount of XP spent on an attribute.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Misc">
+            <summary>
+            Gets the value of a hook by its ID.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Skill">
+            <summary>
+            Gets the level a skill. "Current" values include buffs, vitae, etc.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.SkillClicks">
+            <summary>
+            Gets the number of times a skill has been raised above the level 
+            calculated from the skill's attribute formula plus free points.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.SkillFreePoints">
+            <summary>
+            Gets the number of free points for a skill.  Specialized skills 
+            have 10 free points.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.SkillTotalXP">
+            <summary>
+            Gets the total amount of XP spent on a skill.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.SkillTrainLevel">
+            <summary>
+            Gets the level to which a skill is trained.
+            <para>0 is untrained; 1 is trained; 2 is specialized.</para>
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.Vital">
+            <summary>
+            Gets the level a vital. "Current" values include buffs, vitae, etc.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.VitalClicks">
+            <summary>
+            Gets the number of times a vital has been raised above the level 
+            calculated from the vital's attribute formula.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HooksWrapper.VitalTotalXP">
+            <summary>
+            Gets the total amount of XP spent on a vital.
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.FontWeight">
+            <summary>
+            FontWeight for use in HUD Rendering
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.WriteTextFormats">
+            <summary>
+            Formats to use when writing text to HUDs
+            </summary>
+        </member>
+        <member name="F:Decal.Adapter.Wrappers.WriteTextFormats.None">
+            <summary>
+            Implies Top and Left
+            </summary>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.RenderServiceWrapper">
+            <summary>
+            RenderServiceWrapper is a wrapper for RenderService
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.RenderServiceWrapper.CreateBackground(System.Drawing.Rectangle)">
+            <summary>
+            Create a new Background object to be used as a background in HUDS
+            </summary>
+            <param name="region">The rectangle to use for the size of the background</param>
+            <returns>Newly created and wrapped RenderService.HUDBackground</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.RenderServiceWrapper.CreateHud(System.Drawing.Rectangle)">
+            <summary>
+            Create a new HUD. New huds need to be made visible before they render. 
+            </summary>
+            <param name="region">Size and location of where the HUD should be rendered</param>
+            <returns>Newly created and wrapped RenderService.HUDView</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.RenderServiceWrapper.RemoveHud(Decal.Adapter.Wrappers.Hud)">
+            <summary>
+            Remove a HUD from the render pipeline
+            </summary>
+            <param name="hud">HUD To remove</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.BeginRender">
+            <summary>
+            Begin rendering to this object, must be paired with EndRender
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.BeginRender(System.Boolean)">
+            <summary>
+            Begin rendering to this object, must be paired with EndRender
+            </summary>
+            <param name="enableTextureFilter">True to enable texture filtering during rendering</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.EndRender">
+            <summary>
+            End rendering to this object, must be paired with BeginRender
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.BeginText(System.String,System.Int32)">
+            <summary>
+            Begin writing text
+            </summary>
+            <param name="fontName">Name of the font to use for writing text</param>
+            <param name="pixelHeight">Height in pixels to use when writing text</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.BeginText(System.String,System.Int32,Decal.Adapter.Wrappers.FontWeight,System.Boolean)">
+            <summary>
+            Begin writing text
+            </summary>
+            <param name="fontName">Name of the font to use for writing text</param>
+            <param name="pixelHeight">Height in pixels to use when writing text</param>
+            <param name="weight">Bold, Strong, etc, indicator for text to be written</param>
+            <param name="italic">Write text in italics?</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.WriteText(System.String)">
+            <summary>
+            Display text,using the full rectangle of the render target as the area.
+            This overload will draw the text in black. 
+            </summary>
+            <param name="text">Text to display</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.WriteText(System.String,System.Drawing.Color)">
+            <summary>
+            Display text,using the full rectangle of the render target as the area.
+            </summary>
+            <param name="text">Text to display</param>
+            <param name="color">Color to use to display the text. (Including alpha channel)</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.WriteText(System.String,System.Drawing.Color,Decal.Adapter.Wrappers.WriteTextFormats,System.Drawing.Rectangle)">
+            <summary>
+            Display text,using the full rectangle of the render target as the area.
+            </summary>
+            <param name="text">Text to display</param>
+            <param name="color">Color to use to display the text. (Including alpha channel)</param>
+            <param name="format">Format specifiers, including centered, etc.</param>
+            <param name="region">Rectangle relative to this object to use to bound the text</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.WriteText(System.String,System.Int32,Decal.Adapter.Wrappers.WriteTextFormats,System.Drawing.Rectangle)">
+            <summary>
+            Display text,using the full rectangle of the render target as the area.
+            </summary>
+            <param name="text">Text to display</param>
+            <param name="color">Color to use to display the text. (Including alpha channel)</param>
+            <param name="format">Format specifiers, including centered, etc.</param>
+            <param name="region">Rectangle relative to this object to use to bound the text</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderTarget.EndText">
+            <summary>
+            End drawing of text. 
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HudRenderScalable.ScaleRect">
+            <summary>
+            Returns the Area scaling has caused the Hud to encompass
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HudRenderScalable.ScaleFactor">
+            <summary>
+            Scale the width and height of the Hud by the specified value keeping the current position.
+            This will not return 'good' values when using ScaleTo
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.HudRenderScalable.Scaling">
+            <summary>
+            Specifies whether or not Scaling is occuring (setting to false disables scaling)
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.HudRenderScalable.ScaleTo(System.Drawing.Rectangle)">
+            <summary>
+            Scales the Hud to fill the area specified
+            </summary>
+            <param name="rect">Area for the Hud to encompass</param>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Hud.Angle">
+            <summary>
+            Angle in Radians for rotation of the HUD
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.Hud.Alpha">
+            <summary>
+            Alpha for entire hud
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.CoordsObject.NorthSouth">
+            <summary>
+            The north or south component of these coordinates. North is 
+            positive and south is negative.
+            </summary>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.CoordsObject.EastWest">
+            <summary>
+            The east or west component of these coordinates. East is positive 
+            and west is negative.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.CoordsObject.DistanceToCoords(Decal.Adapter.Wrappers.CoordsObject)">
+            <summary>
+            Calculates the straight-line distance between these coordinates 
+            and the given coordinates.
+            </summary>
+            <param name="destination">The coordinates to calculate the 
+            	distance to.</param>
+            <returns>The distance between these coordinates and the given 
+            	coordinates.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.CoordsObject.AngleToCoords(Decal.Adapter.Wrappers.CoordsObject)">
+            <summary>
+            Calculates the angle from these coordinates to the given 
+            coordinates, in degrees.  North is 0, east is 90, south is 180, 
+            and west is 270.
+            </summary>
+            <param name="destination">The coordinates to calculate the 
+            	angle to.</param>
+            <returns>The angle between these coordinates and the given 
+            	coordinates.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.CoordsObject.AngleToCoordsRadians(Decal.Adapter.Wrappers.CoordsObject)">
+            <summary>
+            Calculates the angle from these coordinates to the given 
+            coordinates, in radians.  North is 0, east is pi/2, south is pi, 
+            and west is 3*pi/2.
+            </summary>
+            <param name="destination"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.CoordsObject.ToString">
+            <summary>Formats the coordinates like "0.0N, 0.0E"</summary>
+            <returns>The formatted coordinate string.</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.CoordsObject.ToString(System.String)">
+            <summary>
+            Formats the coordinates using the number style you choose to 
+            format the NorthSouth and EastWest numbers.
+            </summary>
+            <param name="numberFormat">The format for the NorthSouth and 
+            	EastWest numbers. This can be any format string used by
+            	double.ToString(). E.g., use "0.00" for 2-digit precision on 
+            	the coordinates.</param>
+            <returns>The formatted coordinate string.</returns>
+        </member>
+        <member name="P:Decal.Adapter.Wrappers.WorldFilter.OpenVendor">
+            <summary>
+            Returns the currently open vendor object.  You **MUST** dispose this object when finished with it.
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.Distance(System.Int32,System.Int32)">
+            <summary>
+            Returns the 2D distance between two items
+            </summary>
+            <param name="id1">Id of the first item</param>
+            <param name="id2">Id of the second item</param>
+            <returns>The distance between the items</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.Distance(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Returns the distance between two items
+            </summary>
+            <param name="id1">Id of the first item</param>
+            <param name="id2">Id of the second item</param>
+            <param name="use3d">Whether or not height is taken into account</param>
+            <returns>The distance between the items</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetInventory">
+            <summary>
+            Gets all of the items in the player's inventory.
+            </summary>
+            <returns>WorldObjectCollection containing the items in the character's inventory</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetAll">
+            <summary>
+            Gets all of the items known to WorldFilter.
+            </summary>
+            <returns>WorldObjectCollection containing all of the items in the world</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetLandscape">
+            <summary>
+            Gets all of the items known to WorldFilter that don't have a container.
+            </summary>
+            <returns>WorldObjectCollection containing all of the items on the landscape</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetByContainer(System.Int32)">
+            <summary>
+            Gets all of the items in the given container.
+            </summary>
+            <param name="container">Id of the container</param>
+            <returns>WorldObjectCollection containing the items in the container</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetByCategory(System.Int32)">
+            <summary>
+            Gets all of the items with the specified category.
+            </summary>
+            <param name="category">Category</param>
+            <returns>WorldObjectCollection containing the items in the category</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetByName(System.String)">
+            <summary>
+            Gets all of the items that have the specified name.
+            </summary>
+            <param name="name">Name of the items</param>
+            <returns>WorldObjectCollection containing the items with the name</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetByNameSubstring(System.String)">
+            <summary>
+            Gets all of the items with names that contain the specified string.
+            </summary>
+            <param name="name">Partial name of items</param>
+            <returns>WorldObjectCollection containing the items with the name part</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetByObjectClass(Decal.Adapter.Wrappers.ObjectClass)">
+            <summary>
+            Gets all of the items in the object class
+            </summary>
+            <param name="objClass">class of the objects</param>
+            <returns>WorldObjectCollection containing the items in the class</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.WorldFilter.GetByOwner(System.Int32)">
+            <summary>
+            Gets the items owned by the specified character
+            </summary>
+            <param name="owner">Id of the owning character</param>
+            <returns>WorldObjectCollection containing the items owned by the character</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ViewWrapper.ScanViews(Decal.Adapter.Wrappers.IViewHandler)">
+            <summary>
+            Reads the class's view attributes and loads the requested views
+            </summary>
+            <param name="handler">handler to scan</param>
+            <returns>True when views are created, False otherwise</returns>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ViewWrapper.ScanControls(Decal.Adapter.Wrappers.IViewHandler)">
+            <summary>
+            Reads the class for ControlEvents and hooks them up
+            </summary>
+            <param name="handler">handler to scan</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ViewWrapper.ScanReferences(Decal.Adapter.Wrappers.IViewHandler)">
+            <summary>
+            Reads the class for ControlReferences and adds them
+            </summary>
+            <param name="handler">handler to scan</param>
+        </member>
+        <member name="T:Decal.Adapter.Wrappers.ControlRegistry">
+            <summary>
+            Used for the registration and creation of control wrappers
+            </summary>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ControlRegistry.RegisterControls(System.Reflection.Assembly)">
+            <summary>
+            Scans an assembly and registers all of its control wrappers
+            </summary>
+            <param name="assembly">the assembly to scan</param>
+        </member>
+        <member name="M:Decal.Adapter.Wrappers.ControlRegistry.CreateInstance(Decal.Interop.Inject.IControl)">
+            <summary>
+            Creates a control wrapper for the passed in control
+            </summary>
+            <param name="control">the control to wrap</param>
+            <returns>the new wrapper</returns>
+        </member>
+        <member name="T:CustomCollections.HashedList`1">
+            <summary>
+            A doubly-linked list with a Dictionary index. Duplicate items are not allowed.
+            -Add is O(1)
+            -Contains is O(1)
+            -Remove is O(1)
+            -Get/set by index is O(n)
+            -Insert is O(n)
+            -RemoveAt is O(n)
+            Additionally, a cached pointer (with associated index) is kept pointing to the last used index item.
+            When looking up an item by index, the list is walked from the head, tail, or cached index pointer.
+            Thus, doing multiple operations in index order is O(1) even without an enumerator.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CustomCollections.HashedList`1.RunToIndex(System.Int32)">
+            <summary>
+            This method gets the node corresponding to a particular index. To get there,
+            the list is traversed from the head, tail, or cached index pointer (if valid).
+            </summary>
+            <param name="ind"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

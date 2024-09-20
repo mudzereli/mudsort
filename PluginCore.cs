@@ -375,7 +375,7 @@ public class PluginCore : PluginBase
                 id = 2;
             } else if (iFlag.key is MSLongValueKey) {
                 id = 3;
-            } else if (iFlag.key is DoubleValueKey) {
+            } else if (iFlag.key is MSDoubleValueKey) {
                 id = 4;
             } else if (iFlag.key is MSBoolValueKey) {
                 id = 5;

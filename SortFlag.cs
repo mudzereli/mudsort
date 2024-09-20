@@ -11,6 +11,7 @@ namespace mudsort
 
         public static SortFlag OBJECT_CLASS = new SortFlag("ObjectClass",0x29D1,"OC", "OC");
         public static SortFlag CALCED_TOTAL_RATINGS = new SortFlag("CalcedTotalRatings", 0x29D1, "TR", "TR");
+        //public static SortFlag BITING_STRIKE = new SortFlag("BitingStrikeChance", 0x29CE, "BS", "BS");
 
         public String name;
         public String code;
@@ -59,7 +60,7 @@ namespace mudsort
                 ArrayList enums = new ArrayList();
                 enums.AddRange(Enum.GetValues(typeof(MSStringValueKey)));
                 enums.AddRange(Enum.GetValues(typeof(MSLongValueKey)));
-                enums.AddRange(Enum.GetValues(typeof(DoubleValueKey)));
+                enums.AddRange(Enum.GetValues(typeof(MSDoubleValueKey)));
                 enums.AddRange(Enum.GetValues(typeof(MSBoolValueKey)));
                 foreach (var key in enums)
                 {
@@ -120,7 +121,7 @@ namespace mudsort
                     {
                         keyIcon = 0x29CD;
                     }
-                    else if (key is DoubleValueKey)
+                    else if (key is MSDoubleValueKey)
                     {
                         keyIcon = 0x29CE;
                     }
@@ -166,7 +167,7 @@ namespace mudsort
 
         public String valueOf(WorldObject obj)
         {
-            if (key is DoubleValueKey)
+            if (key is MSDoubleValueKey)
             {
                 return (((int) ((Double) directValueOf(obj) * 100)).ToString());
             }
@@ -199,7 +200,7 @@ namespace mudsort
             {
                 return obj.Values((LongValueKey)key);
             }
-            else if (key is DoubleValueKey)
+            else if (key is MSDoubleValueKey)
             {
                 return obj.Values((DoubleValueKey)key);
             }
