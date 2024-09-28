@@ -169,7 +169,7 @@ namespace mudsort
         {
             if (key is MSDoubleValueKey)
             {
-                return (((int) ((Double) directValueOf(obj) * 100)).ToString());
+                return (((int) ((Double) directValueOf(obj) * 10000)).ToString());
             }
             else
             {
