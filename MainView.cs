@@ -44,6 +44,7 @@ class MainView : IDisposable
         VirindiViewService.XMLParsers.Decal3XMLParser parser = new VirindiViewService.XMLParsers.Decal3XMLParser();
         parser.ParseFromResource("mudsort.mainView.xml", out properties, out controls);
         View = new VirindiViewService.HudView(properties, controls);
+        View.Theme = new VirindiViewService.Themes.Float_Theme();
 
         // set up code for underlying controls
         edtSourceContainer  = View != null ? (HudTextBox)     View["edtSourceContainer"]    : new HudTextBox();
