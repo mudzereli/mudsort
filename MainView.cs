@@ -3,6 +3,7 @@ using VirindiViewService;
 using Decal.Adapter;
 using Decal.Adapter.Wrappers;
 using VirindiViewService.Controls;
+using System.Configuration;
 
 namespace mudsort
 {
@@ -319,8 +320,9 @@ class MainView : IDisposable
             {
                 try
                 {
+                    var configFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
                     Properties.Settings.Default.Save();
-                    Util.WriteToChat("Settings Saved!");
+                    Util.WriteToChat("Settings Saved @ "+configFilePath);
                 }
                 catch (Exception ex) { Util.LogError(ex); }
             };
