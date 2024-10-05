@@ -11,7 +11,8 @@ namespace mudsort
 
         public static SortFlag OBJECT_CLASS = new SortFlag("ObjectClass",0x29D1,"OC", "OC");
         public static SortFlag CALCED_TOTAL_RATINGS = new SortFlag("CalcedTotalRatings", 0x29D1, "TR", "TR");
-        //public static SortFlag BITING_STRIKE = new SortFlag("BitingStrikeChance", 0x29CE, "BS", "BS");
+        public static SortFlag BUFFED_WEAPON_DAMAGE = new SortFlag("BuffedWeaponDamage", 0x29D1, "BW", "BW");
+        public static SortFlag BUFFED_ELEMENTAL_DAMAGE = new SortFlag("BuffedElementalDamage", 0x29D1, "BE", "BE");
 
         public String name;
         public String code;
@@ -187,10 +188,59 @@ namespace mudsort
             {
                 return obj.Values((LongValueKey)MSLongValueKey.DamRating)
                     + obj.Values((LongValueKey)MSLongValueKey.DamResistRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.CritRating)
+                    + obj.Values((LongValueKey)MSLongValueKey.CritResist)
                     + obj.Values((LongValueKey)MSLongValueKey.CritDamRating)
                     + obj.Values((LongValueKey)MSLongValueKey.CritDamResistRating)
                     + obj.Values((LongValueKey)MSLongValueKey.HealBoostRating)
                     + obj.Values((LongValueKey)MSLongValueKey.VitalityRating);
+            }
+            else if (this == BUFFED_WEAPON_DAMAGE)
+            {
+                int val = obj.Values((LongValueKey)MSLongValueKey.MaxDamage);
+                if (obj.SpellCount > 0)
+                {
+                    for (int i = 0; i < obj.SpellCount; i++)
+                    {
+                        int spellID = obj.Spell(i);
+                        switch (spellID)
+                        {
+                            case 2453: val = val + 2; break;
+                            case 2486: val = val + 2; break;
+                            case 2487: val = val + 2; break;
+                            case 2598: val = val + 2; break;
+                            case 3828: val = val + 3; break;
+                            case 2454: val = val + 4; break;
+                            case 2586: val = val + 4; break;
+                            case 2629: val = val + 5; break;
+                            case 2452: val = val + 6; break;
+                            case 4661: val = val + 7; break;
+                            case 6089: val = val + 10; break;
+                        }
+                    }
+                }
+                return val;
+            }
+            else if (this == BUFFED_ELEMENTAL_DAMAGE)
+            {
+                double val = obj.Values((DoubleValueKey)MSDoubleValueKey.ElementalDamageVersusMonsters);
+                if (obj.SpellCount > 0)
+                {
+                    for (int i = 0;i < obj.SpellCount;i++)
+                    {
+                        int spellID = obj.Spell(i);
+                        switch (spellID)
+                        {
+                            case 3251: val = val + 0.01; break;
+                            case 6035: val = val + 0.01; break;
+                            case 2352: val = val + 0.02; break;
+                            case 3250: val = val + 0.03; break;
+                            case 4670: val = val + 0.05; break;
+                            case 6098: val = val + 0.07; break;
+                        }
+                    }
+                }
+                return val;
             }
             else if (key is MSStringValueKey)
             {
@@ -219,6 +269,11 @@ namespace mudsort
             WorldObject obj = Globals.Core.WorldFilter[Globals.Core.Actions.CurrentSelection];
             String props = obj.Values(StringValueKey.Name) + " : " + name.ToString() + " : " + directValueOf(obj);
             Util.WriteToChat(props);
+            //Util.WriteToChat("============================================");
+            //for (int i = 0;i <= obj.SpellCount;i++)
+            //{
+            //    Util.WriteToChat("Spell: "+obj.Spell(i).ToString());
+            //}
             return props;
         }
     }

@@ -3,24 +3,31 @@
   "WorkspaceRootPath": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\mainview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:mainview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|c:\\turbine\\asheron\u0027s call\\mudsort\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}",
-      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\sortflag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:sortflag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|c:\\turbine\\asheron\u0027s call\\mudsort\\mainview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:mainview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\plugincore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:plugincore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|mudsort||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}",
+      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\mainview.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -31,10 +38,6 @@
       "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
@@ -43,11 +46,11 @@
       "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|mudsort||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|C:\\Turbine\\Asheron\u0027s Call\\mudsort\\alphanumcomparator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|solutionrelative:alphanumcomparator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2880823-67E7-4B3D-A481-9ADC9847C39C}|mudsort.csproj|c:\\turbine\\asheron\u0027s call\\mudsort\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
     }
   ],
   "DocumentGroupContainers": [
@@ -57,11 +60,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Settings.settings",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Properties\\Settings.settings",
               "RelativeDocumentMoniker": "Properties\\Settings.settings",
@@ -73,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "app.config",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\app.config",
               "RelativeDocumentMoniker": "app.config",
@@ -86,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "mainView.xml",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\mainView.xml",
               "RelativeDocumentMoniker": "mainView.xml",
@@ -94,17 +97,18 @@
               "RelativeToolTip": "mainView.xml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2024-09-28T02:34:56.999Z"
+              "WhenOpened": "2024-09-28T02:34:56.999Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainView.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\MainView.cs",
               "RelativeDocumentMoniker": "MainView.cs",
               "ToolTip": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\MainView.cs",
               "RelativeToolTip": "MainView.cs",
-              "ViewState": "AgIAACIBAAAAAAAAAAAAAEMBAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAUBAAAAAAAAAADgvxwBAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-20T19:50:36.215Z",
               "EditorCaption": ""
@@ -119,22 +123,24 @@
               "RelativeToolTip": "AlphanumComparator.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAYwCcAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T20:19:51.574Z"
+              "WhenOpened": "2024-09-20T20:19:51.574Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "mudsort",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\mudsort.csproj",
               "RelativeDocumentMoniker": "mudsort.csproj",
               "ToolTip": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\mudsort.csproj",
               "RelativeToolTip": "mudsort.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-09-20T19:58:04.459Z"
+              "WhenOpened": "2024-09-20T19:58:04.459Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Globals.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Globals.cs",
               "RelativeDocumentMoniker": "Globals.cs",
@@ -142,62 +148,64 @@
               "RelativeToolTip": "Globals.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:49:07.958Z"
+              "WhenOpened": "2024-09-20T19:49:07.958Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Enums.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Enums.cs",
               "RelativeDocumentMoniker": "Enums.cs",
               "ToolTip": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Enums.cs",
               "RelativeToolTip": "Enums.cs",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAwwJoAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAGwAAAAAAAAAAADgv4YAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2022-02-15T14:34:42.347Z"
+              "WhenOpened": "2022-02-15T14:34:42.347Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "PluginCore.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\PluginCore.cs",
               "RelativeDocumentMoniker": "PluginCore.cs",
               "ToolTip": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\PluginCore.cs",
               "RelativeToolTip": "PluginCore.cs",
-              "ViewState": "AgIAAMkAAAAAAAAAAIBZwM4AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAI0AAAAAAAAAAAArwKQAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2022-02-15T14:58:30.193Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "SortFlag.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\SortFlag.cs",
               "RelativeDocumentMoniker": "SortFlag.cs",
               "ToolTip": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\SortFlag.cs",
               "RelativeToolTip": "SortFlag.cs",
-              "ViewState": "AgIAAJEAAAAAAAAAAIA2wJkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMcAAAAAAAAAAADgv90AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2022-02-13T15:04:39.76Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Properties\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
               "ToolTip": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Properties\\AssemblyInfo.cs",
               "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2022-02-15T15:20:19.856Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Settings.cs",
               "DocumentMoniker": "C:\\Turbine\\Asheron\u0027s Call\\mudsort\\Settings.cs",
               "RelativeDocumentMoniker": "Settings.cs",
@@ -205,7 +213,8 @@
               "RelativeToolTip": "Settings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-28T02:36:07.023Z"
+              "WhenOpened": "2024-09-28T02:36:07.023Z",
+              "EditorCaption": ""
             }
           ]
         }
