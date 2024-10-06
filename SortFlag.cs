@@ -18,6 +18,7 @@ namespace mudsort
         public static SortFlag BUFFED_ARMOR_LEVEL = new SortFlag("BuffedArmorLevel", 0x29D1, "BP", "BP");
         public static SortFlag BUFFED_MANA_CONVERSION = new SortFlag("BuffedManaConversion", 0x29D1, "BM", "BM");
         public static SortFlag TOTAL_MISSILE_DAMAGE = new SortFlag("TotalMissileDamage", 0x29D1, "TM", "TM");
+        public static SortFlag TOTAL_SUMMON_DAMAGE = new SortFlag("TotalSummonDamage", 0x29D1, "TS", "TS");
 
         public String name;
         public String code;
@@ -70,6 +71,7 @@ namespace mudsort
                 codes.Add(BUFFED_ARMOR_LEVEL.code);
                 codes.Add(BUFFED_MANA_CONVERSION.code);
                 codes.Add(TOTAL_MISSILE_DAMAGE.code);
+                codes.Add(TOTAL_SUMMON_DAMAGE.code);
                 ArrayList enums = new ArrayList();
                 enums.AddRange(Enum.GetValues(typeof(MSStringValueKey)));
                 enums.AddRange(Enum.GetValues(typeof(MSLongValueKey)));
@@ -374,6 +376,21 @@ namespace mudsort
                     }
                 }
                 return baseDMG + elementalDMG + cantripDMG;
+            }
+            else if (this == TOTAL_SUMMON_DAMAGE)
+            {
+                //((MaxDam + MinDam)/2 * DamageRating * (1 - Crit Rate)) + (MaxDam * 2 [CritMod] * TotalCritDamageRating * CritRate)
+                int maxDMG = 100;
+                int minDMG = 25;
+                int ratingDMG = obj.Values((LongValueKey)MSLongValueKey.DamRating);
+                int ratingCRIT = obj.Values((LongValueKey)MSLongValueKey.CritRating);
+                int ratingCRITDAM = obj.Values((LongValueKey)MSLongValueKey.CritDamRating);
+                double avgDMG = (maxDMG + minDMG) / 2.0; // Fix integer division
+                double DamageRating = 1 + (ratingDMG / 100.0); // Fix integer division
+                double CritRating = (ratingCRIT + 10) / 100.0; // Fix integer division
+                double CritMod = (100 + ratingDMG + ratingCRITDAM) / 100.0; // Fix integer division
+                double formulaCalc = (avgDMG * DamageRating * (1 - CritRating)) + (maxDMG * 2 * CritMod * CritRating);
+                return (int)formulaCalc;
             }
             else if (key is MSStringValueKey)
             {
