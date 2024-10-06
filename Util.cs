@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mudsort.Properties;
+using System;
 using System.IO;
 
 namespace mudsort
@@ -40,13 +41,24 @@ namespace mudsort
 			}
 		}
 
-		public static void WriteToChat(string message)
-		{
-			try
-			{
-				Globals.Host.Actions.AddChatText("[" + Globals.PluginName + "]: " + message, 5);
-			}
-			catch (Exception ex) { LogError(ex); }
-		}
-	}
+        public static void WriteToChat(string message)
+        {
+            try
+            {
+                Globals.Host.Actions.AddChatText("[" + Globals.PluginName + "]: " + message, 5);
+            }
+            catch (Exception ex) { LogError(ex); }
+        }
+        public static void DebugWrite(string message)
+        {
+            try
+            {
+                if (Settings.Default.Debug)
+                {
+                    Globals.Host.Actions.AddChatText("[" + Globals.PluginName + "]: " + message, 5);
+                }
+            }
+            catch (Exception ex) { LogError(ex); }
+        }
+    }
 }
