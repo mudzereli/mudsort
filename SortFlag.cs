@@ -17,6 +17,7 @@ namespace mudsort
         public static SortFlag BUFFED_ATTACK_BONUS = new SortFlag("BuffedAttackBonus", 0x29D1, "BA", "BA");
         public static SortFlag BUFFED_ARMOR_LEVEL = new SortFlag("BuffedArmorLevel", 0x29D1, "BP", "BP");
         public static SortFlag BUFFED_MANA_CONVERSION = new SortFlag("BuffedManaConversion", 0x29D1, "BM", "BM");
+        public static SortFlag TOTAL_MISSILE_DAMAGE = new SortFlag("TotalMissileDamage", 0x29D1, "TM", "TM");
 
         public String name;
         public String code;
@@ -68,6 +69,7 @@ namespace mudsort
                 codes.Add(BUFFED_ATTACK_BONUS.code);
                 codes.Add(BUFFED_ARMOR_LEVEL.code);
                 codes.Add(BUFFED_MANA_CONVERSION.code);
+                codes.Add(TOTAL_MISSILE_DAMAGE.code);
                 ArrayList enums = new ArrayList();
                 enums.AddRange(Enum.GetValues(typeof(MSStringValueKey)));
                 enums.AddRange(Enum.GetValues(typeof(MSLongValueKey)));
@@ -184,7 +186,7 @@ namespace mudsort
             }
             else if (this == BUFFED_ELEMENTAL_DAMAGE || this == BUFFED_ATTACK_BONUS || this == BUFFED_MANA_CONVERSION || this == BUFFED_MELEE_DEFENSE)
             {
-                return (((int)((Double)directValueOf(obj) * 10000)).ToString());
+                return (((int) ((Double) directValueOf(obj) * 10000)).ToString());
             }
             else
             {
@@ -341,6 +343,37 @@ namespace mudsort
                     }
                 }
                 return val;
+            }
+            else if (this == TOTAL_MISSILE_DAMAGE)
+            {
+                double baseMod = obj.Values((DoubleValueKey)MSDoubleValueKey.DamageBonus);
+                if (baseMod == 0)
+                    return 0;
+                int elementalDMG = obj.Values((LongValueKey)MSLongValueKey.ElementalDmgBonus);
+                int cantripDMG = 0;
+                int baseDMG = (int)((baseMod - 1) * 100 / 3);
+                if (obj.SpellCount > 0)
+                {
+                    for (int i = 0; i < obj.SpellCount; i++)
+                    {
+                        int spellID = obj.Spell(i);
+                        switch (spellID)
+                        {
+                            case 2453: cantripDMG = cantripDMG + 2; break;
+                            case 2486: cantripDMG = cantripDMG + 2; break;
+                            case 2487: cantripDMG = cantripDMG + 2; break;
+                            case 2598: cantripDMG = cantripDMG + 2; break;
+                            case 3828: cantripDMG = cantripDMG + 3; break;
+                            case 2454: cantripDMG = cantripDMG + 4; break;
+                            case 2586: cantripDMG = cantripDMG + 4; break;
+                            case 2629: cantripDMG = cantripDMG + 5; break;
+                            case 2452: cantripDMG = cantripDMG + 6; break;
+                            case 4661: cantripDMG = cantripDMG + 7; break;
+                            case 6089: cantripDMG = cantripDMG + 10; break;
+                        }
+                    }
+                }
+                return baseDMG + elementalDMG + cantripDMG;
             }
             else if (key is MSStringValueKey)
             {
