@@ -62,6 +62,12 @@ namespace mudsort
                 ArrayList codes = new ArrayList();
                 codes.Add(OBJECT_CLASS.code);
                 codes.Add(CALCED_TOTAL_RATINGS.code);
+                codes.Add(BUFFED_WEAPON_DAMAGE.code);
+                codes.Add(BUFFED_ELEMENTAL_DAMAGE.code);
+                codes.Add(BUFFED_MELEE_DEFENSE.code);
+                codes.Add(BUFFED_ATTACK_BONUS.code);
+                codes.Add(BUFFED_ARMOR_LEVEL.code);
+                codes.Add(BUFFED_MANA_CONVERSION.code);
                 ArrayList enums = new ArrayList();
                 enums.AddRange(Enum.GetValues(typeof(MSStringValueKey)));
                 enums.AddRange(Enum.GetValues(typeof(MSLongValueKey)));
@@ -175,6 +181,10 @@ namespace mudsort
             if (key is MSDoubleValueKey)
             {
                 return (((int) ((Double) directValueOf(obj) * 10000)).ToString());
+            }
+            else if (this == BUFFED_ELEMENTAL_DAMAGE || this == BUFFED_ATTACK_BONUS || this == BUFFED_MANA_CONVERSION || this == BUFFED_MELEE_DEFENSE)
+            {
+                return (((int)((Double)directValueOf(obj) * 10000)).ToString());
             }
             else
             {
@@ -306,15 +316,6 @@ namespace mudsort
                             case 2630: val = val + 0.06; break;
                             case 4666: val = val + 0.07; break;
                             case 6094: val = val + 0.09; break;
-                            case 4958: val = val + 10; break;
-                            case 4959: val = val + 10; break;
-                            case 4960: val = val + 10; break;
-                            case 4961: val = val + 10; break;
-                            case 4962: val = val + 10; break;
-                            case 4963: val = val + 10; break;
-                            case 4964: val = val + 10; break;
-                            case 4965: val = val + 10; break;
-                            case 4966: val = val + 10; break;
                         }
                     }
                 }
@@ -330,49 +331,12 @@ namespace mudsort
                         int spellID = obj.Spell(i);
                         switch (spellID)
                         {
-                            case 2680: val = val + 3; break;
-                            case 2465: val = val + 4; break;
-                            case 2456: val = val + 4; break;
-                            case 2468: val = val + 4; break;
-                            case 3222: val = val + 4; break;
-                            case 2459: val = val + 4; break;
-                            case 3228: val = val + 4; break;
-                            case 2462: val = val + 4; break;
-                            case 3219: val = val + 4; break;
-                            case 3234: val = val + 4; break;
-                            case 3225: val = val + 4; break;
-                            case 3231: val = val + 4; break;
-                            case 2560: val = val + 5; break;
-                            case 2457: val = val + 8; break;
-                            case 3229: val = val + 8; break;
-                            case 3232: val = val + 8; break;
-                            case 2463: val = val + 8; break;
-                            case 5028: val = val + 8; break;
-                            case 2466: val = val + 8; break;
-                            case 2469: val = val + 8; break;
-                            case 3217: val = val + 8; break;
-                            case 2460: val = val + 8; break;
-                            case 3220: val = val + 8; break;
-                            case 3223: val = val + 8; break;
-                            case 3226: val = val + 8; break;
-                            case 3568: val = val + 10; break;
-                            case 2691: val = val + 10; break;
-                            case 2458: val = val + 12; break;
-                            case 2461: val = val + 12; break;
-                            case 2464: val = val + 12; break;
-                            case 3218: val = val + 12; break;
-                            case 3227: val = val + 12; break;
-                            case 3221: val = val + 12; break;
-                            case 2467: val = val + 12; break;
-                            case 3224: val = val + 12; break;
-                            case 3233: val = val + 12; break;
-                            case 2455: val = val + 12; break;
-                            case 3230: val = val + 12; break;
-                            case 5029: val = val + 12; break;
-                            case 2525: val = val + 15; break;
-                            case 5027: val = val + 15; break;
-                            case 4705: val = val + 25; break;
-                            case 6064: val = val + 35; break;
+                            case 3201: val = val * 1.05; break;
+                            case 3199: val = val * 1.1; break;
+                            case 3202: val = val * 1.15; break;
+                            case 3200: val = val * 1.2; break;
+                            case 6086: val = val * 1.25; break;
+                            case 6087: val = val * 1.3; break;
                         }
                     }
                 }

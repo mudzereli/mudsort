@@ -197,24 +197,30 @@ public class PluginCore : PluginBase
             }
             else if (CURRENT_STATE == State.BUILDING_LIST)
             {
+                MainView.prgProgressBar.PreText = "building list...";
                 System.Collections.ArrayList sortValueList = new System.Collections.ArrayList();
+                //Util.DebugWrite("# of sortflags = " + sortFlags.Count);
                 for (int i = sortFlags.Count - 1; i >= 0; i--)
                 {
                     SortFlag sf = (SortFlag)sortFlags[i];
                     foreach (WorldObject worldObject in sortList)
                     {
                         String sortMetric = sf.valueOf(worldObject);
+                        //Util.DebugWrite("adding WorldObject = "+worldObject.Name+" / sortMetric = "+ sortMetric);
                         if (!sortValueList.Contains(sortMetric))
                         {
                             sortValueList.Add(sortMetric);
                         }
                     }
+                    //Util.DebugWrite("Sorting List...");
                     sortValueList.Sort(new AlphanumComparator());
+                    //Util.DebugWrite("List Sorted.");
                     System.Collections.ArrayList newSortList = new System.Collections.ArrayList();
                     if (sf.descending)
                     {
                         sortValueList.Reverse();
                     }
+                    //Util.DebugWrite("Starting to Iterate through sorted sortValueList");
                     foreach (Object sortValue in sortValueList)
                     {
                         foreach (WorldObject worldObject in sortList)
