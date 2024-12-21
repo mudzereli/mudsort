@@ -7,18 +7,24 @@ namespace mudsort
 {
     public class SortFlag
     {
+        const int FLAG_LONG = 0x06003353;
+        const int FLAG_DOUBLE = 0x0600335C;
+        const int FLAG_STRING = 0x0600335A;
+        const int FLAG_BOOL = 0x06003356;
+        const int FLAG_CUSTOM = 0x06003354;
+
         public static SortedList sortedFlagList = new SortedList(new AlphanumComparator());
 
-        public static SortFlag OBJECT_CLASS = new SortFlag("ObjectClass",0x29D1,"OC", "OC");
-        public static SortFlag CALCED_TOTAL_RATINGS = new SortFlag("CalcedTotalRatings", 0x29D1, "TR", "TR");
-        public static SortFlag BUFFED_WEAPON_DAMAGE = new SortFlag("BuffedWeaponDamage", 0x29D1, "BW", "BW");
-        public static SortFlag BUFFED_ELEMENTAL_DAMAGE = new SortFlag("BuffedElementalDamage", 0x29D1, "BE", "BE");
-        public static SortFlag BUFFED_MELEE_DEFENSE = new SortFlag("BuffedMeleeDefense", 0x29D1, "BD", "BD");
-        public static SortFlag BUFFED_ATTACK_BONUS = new SortFlag("BuffedAttackBonus", 0x29D1, "BA", "BA");
-        public static SortFlag BUFFED_ARMOR_LEVEL = new SortFlag("BuffedArmorLevel", 0x29D1, "BP", "BP");
-        public static SortFlag BUFFED_MANA_CONVERSION = new SortFlag("BuffedManaConversion", 0x29D1, "BM", "BM");
-        public static SortFlag TOTAL_MISSILE_DAMAGE = new SortFlag("TotalMissileDamage", 0x29D1, "TM", "TM");
-        public static SortFlag TOTAL_SUMMON_DAMAGE = new SortFlag("TotalSummonDamage", 0x29D1, "TS", "TS");
+        public static SortFlag OBJECT_CLASS = new SortFlag("ObjectClass", FLAG_CUSTOM, "OC", "OC");
+        public static SortFlag CALCED_TOTAL_RATINGS = new SortFlag("CalcedTotalRatings", FLAG_CUSTOM, "TR", "TR");
+        public static SortFlag BUFFED_WEAPON_DAMAGE = new SortFlag("BuffedWeaponDamage", FLAG_CUSTOM, "BW", "BW");
+        public static SortFlag BUFFED_ELEMENTAL_DAMAGE = new SortFlag("BuffedElementalDamage", FLAG_CUSTOM, "BE", "BE");
+        public static SortFlag BUFFED_MELEE_DEFENSE = new SortFlag("BuffedMeleeDefense", FLAG_CUSTOM, "BD", "BD");
+        public static SortFlag BUFFED_ATTACK_BONUS = new SortFlag("BuffedAttackBonus", FLAG_CUSTOM, "BA", "BA");
+        public static SortFlag BUFFED_ARMOR_LEVEL = new SortFlag("BuffedArmorLevel", FLAG_CUSTOM, "BP", "BP");
+        public static SortFlag BUFFED_MANA_CONVERSION = new SortFlag("BuffedManaConversion", FLAG_CUSTOM, "BM", "BM");
+        public static SortFlag TOTAL_MISSILE_DAMAGE = new SortFlag("TotalMissileDamage", FLAG_CUSTOM, "TM", "TM");
+        public static SortFlag TOTAL_SUMMON_DAMAGE = new SortFlag("TotalSummonDamage", FLAG_CUSTOM, "TS", "TS");
 
         public String name;
         public String code;
@@ -127,22 +133,22 @@ namespace mudsort
                         code = name.Substring(0, 2);
                         code = code.ToUpper();
                     }
-                    int keyIcon = 0x29D1;
+                    int keyIcon = SortFlag.FLAG_CUSTOM;
                     if (key is MSStringValueKey)
                     {
-                        keyIcon = 0x29CC;
+                        keyIcon = SortFlag.FLAG_STRING;
                     }
                     else if (key is MSLongValueKey)
                     {
-                        keyIcon = 0x29CD;
+                        keyIcon = SortFlag.FLAG_LONG;
                     }
                     else if (key is MSDoubleValueKey)
                     {
-                        keyIcon = 0x29CE;
+                        keyIcon = SortFlag.FLAG_DOUBLE;
                     }
                     else if (key is MSBoolValueKey)
                     {
-                        keyIcon = 0x29CF;
+                        keyIcon = SortFlag.FLAG_BOOL;
                     }
                     if (!codes.Contains(code) && !sortedFlagList.ContainsKey(keyIcon + name))
                     {
@@ -186,7 +192,7 @@ namespace mudsort
             {
                 return (((int) ((Double) directValueOf(obj) * 10000)).ToString());
             }
-            else if (this == BUFFED_ELEMENTAL_DAMAGE || this == BUFFED_ATTACK_BONUS || this == BUFFED_MANA_CONVERSION || this == BUFFED_MELEE_DEFENSE)
+            else if (this == BUFFED_ELEMENTAL_DAMAGE || this == BUFFED_ATTACK_BONUS || this == BUFFED_MANA_CONVERSION || this == BUFFED_MELEE_DEFENSE || this == TOTAL_SUMMON_DAMAGE)
             {
                 return (((int) ((Double) directValueOf(obj) * 10000)).ToString());
             }
@@ -380,17 +386,20 @@ namespace mudsort
             else if (this == TOTAL_SUMMON_DAMAGE)
             {
                 //((MaxDam + MinDam)/2 * DamageRating * (1 - Crit Rate)) + (MaxDam * 2 [CritMod] * TotalCritDamageRating * CritRate)
-                int maxDMG = 100;
-                int minDMG = 25;
+                //int maxDMG = 100;
+                //int minDMG = 25;
                 int ratingDMG = obj.Values((LongValueKey)MSLongValueKey.DamRating);
                 int ratingCRIT = obj.Values((LongValueKey)MSLongValueKey.CritRating);
                 int ratingCRITDAM = obj.Values((LongValueKey)MSLongValueKey.CritDamRating);
-                double avgDMG = (maxDMG + minDMG) / 2.0; // Fix integer division
+                //double avgDMG = (maxDMG + minDMG) / 2.0; // Fix integer division
                 double DamageRating = 1 + (ratingDMG / 100.0); // Fix integer division
                 double CritRating = (ratingCRIT + 10) / 100.0; // Fix integer division
                 double CritMod = (100 + ratingDMG + ratingCRITDAM) / 100.0; // Fix integer division
-                double formulaCalc = (avgDMG * DamageRating * (1 - CritRating)) + (maxDMG * 2 * CritMod * CritRating);
-                return (int)formulaCalc;
+                //double formulaCalc = (avgDMG * DamageRating * (1 - CritRating)) + (maxDMG * 2 * CritMod * CritRating);
+                double formulaCalc = (0.625 * (1 + ratingDMG / 100.0) * (.9 - ratingCRIT / 100.0) + 2 * (1 + (ratingDMG + ratingCRITDAM) / 100.0) * (.1 + ratingCRIT / 100.0)) / 0.01365;
+                return (double)formulaCalc;
+                // ((MaxDam + MinDam)/2 * DamageRating * (1 - Crit Rate)) + (MaxDam * 2 [CritMod] * TotalCritDamageRating * CritRate)
+                // (0.625 * (1 +$D / 100)*(.9 -$C / 100)+2 * (1 + ($D +$CD)/ 100)*(.1 +$C / 100))/ 0.01365
             }
             else if (key is MSStringValueKey)
             {

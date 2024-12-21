@@ -18,7 +18,7 @@ namespace mudsort {
 public class PluginCore : PluginBase
 {
 
-    const int ICON_ADD = 0x60011F9; // GREEN CIRCLE
+    const int ICON_ADD = 0x060011F9; // GREEN CIRCLE
     const int ICON_MOVE_DOWN = 0x60028FD; // RED DOWN ARROW
     const int ICON_MOVE_UP = 0x60028FC; // GREEN UP ARROW
     const int ICON_REMOVE = 0x60011F8; //RED CIRCLE SLASH
@@ -40,28 +40,45 @@ public class PluginCore : PluginBase
         return instance;
     }
 
+    /// Initializes the sorting process by filtering items and registering an event handler.
     public void activate()
     {
         try
         {
+            // Set the current state to initiated
             CURRENT_STATE = State.INITIATED;
+
+            // Clear existing sort queues and lists
             sortQueue.Clear();
             sortList.Clear();
+
+            // Iterate through items in the specified container
             foreach (WorldObject worldObject in Core.WorldFilter.GetByContainer(containerSource))
             {
-                if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0 
-                        && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1 
-                        && !worldObject.ObjectClass.Equals(ObjectClass.Foci) 
+                // Check if the item is not equipped, has a valid slot, is not a Foci object,
+                // and matches the selected object class filter (if applicable)
+                if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0
+                        && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1
+                        && !worldObject.ObjectClass.Equals(ObjectClass.Foci)
                         && (MainView.cmbObjClassFilters.Current == 0
                             || (MainView.cmbObjClassFilters.Current != 0 && worldObject.ObjectClass.ToString().ToLower().StartsWith(ocfilter.ToLower()))))
                 {
+                    // Add the world object to the sort list
                     addWorldObject(sortList, worldObject, false);
                 }
             }
+
+            // Log the number of items added to the sort list
             Util.WriteToChat(sortList.Count + " items added to sort list...");
+
+            // Register the render frame event handler for sorting
             CoreManager.Current.RenderFrame += new EventHandler<EventArgs>(Current_RenderFrame_Sort);
         }
-        catch (Exception e) { Util.LogError(e); }
+        catch (Exception e)
+        {
+            // Log any errors encountered during execution
+            Util.LogError(e);
+        }
     }
 
     public void addWorldObject(System.Collections.IList toList, WorldObject worldObject, bool recursive)
@@ -372,7 +389,7 @@ public class PluginCore : PluginBase
             VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[3], "Click To Decrease Sort Priority Of " + iFlag.key.ToString());
             VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[4], "Click To Remove Sorting By " + iFlag.key.ToString());
             VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[5], "Click To Reverse Sort Order Of " + iFlag.key.ToString());
-            VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[6], iFlag.key.GetType().Name);
+            VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[6], iFlag.key.GetType() == typeof(string) ? "Custom" : iFlag.key.GetType().Name);
         }
         foreach (SortFlag iFlag in SortFlag.sortedFlagList.Values)
         {
