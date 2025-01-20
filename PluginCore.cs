@@ -19,10 +19,11 @@ namespace mudsort {
 public class PluginCore : PluginBase
 {
 
+
     private const int ICON_ADD = 0x60011F9; // GREEN CIRCLE
     private const int ICON_MOVE_DOWN = 0x60028FD; // RED DOWN ARROW
     private const int ICON_MOVE_UP = 0x60028FC; // GREEN UP ARROW
-    private const int ICON_REMOVE = 0x60011F8; //RED CIRCLE SLASH
+    private const int ICON_REMOVE = 0x60011F8; //RED CIRCLE SL
 
     private const string ADVANCED_FILTER = "ADV";
 
@@ -99,13 +100,19 @@ public class PluginCore : PluginBase
         return instance;
     }
 
+    /// Initializes the sorting process by filtering items and registering an event handler.
     public void activate()
     {
         try
         {
+            // Set the current state to initiated
             CURRENT_STATE = State.INITIATED;
+
+            // Clear existing sort queues and lists
             sortQueue.Clear();
             sortList.Clear();
+
+            // Iterate through items in the specified container
             foreach (WorldObject worldObject in Core.WorldFilter.GetByContainer(containerSource))
             {
                 if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0 
@@ -113,15 +120,18 @@ public class PluginCore : PluginBase
                     && !worldObject.ObjectClass.Equals(ObjectClass.Foci) 
                     && MeetsSetFilterCriteria(worldObject))
                 {
+                    // Add the world object to the sort list
                     addWorldObject(sortList, worldObject, false);
                 }
             }
+
+            // Log the number of items added to the sort list
             Util.WriteToChat(sortList.Count + " items added to sort list...");
+
+            // Register the render frame event handler for sorting
             CoreManager.Current.RenderFrame += new EventHandler<EventArgs>(Current_RenderFrame_Sort);
         }
         catch (Exception e) { Util.LogError(e); }
-
-        
     }
 
     private bool MeetsSetFilterCriteria(WorldObject worldObject)
@@ -607,7 +617,7 @@ public class PluginCore : PluginBase
             VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[3], "Click To Decrease Sort Priority Of " + iFlag.key.ToString());
             VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[4], "Click To Remove Sorting By " + iFlag.key.ToString());
             VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[5], "Click To Reverse Sort Order Of " + iFlag.key.ToString());
-            VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[6], iFlag.key.GetType().Name);
+            VirindiViewService.TooltipSystem.AssociateTooltip((HudPictureBox)row[6], iFlag.key.GetType() == typeof(string) ? "Custom" : iFlag.key.GetType().Name);
         }
         foreach (SortFlag iFlag in SortFlag.sortedFlagList.Values)
         {
