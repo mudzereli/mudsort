@@ -5,6 +5,7 @@ using Decal.Adapter;
 using Decal.Adapter.Wrappers;
 using VirindiViewService.Controls;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 /*
  * Template created by Mag-nus. 8/19/2011, VVS added by Virindi-Inquisitor.
@@ -18,11 +19,69 @@ namespace mudsort {
 public class PluginCore : PluginBase
 {
 
-    const int ICON_ADD = 0x60011F9; // GREEN CIRCLE
-    const int ICON_MOVE_DOWN = 0x60028FD; // RED DOWN ARROW
-    const int ICON_MOVE_UP = 0x60028FC; // GREEN UP ARROW
-    const int ICON_REMOVE = 0x60011F8; //RED CIRCLE SLASH
+    private const int ICON_ADD = 0x60011F9; // GREEN CIRCLE
+    private const int ICON_MOVE_DOWN = 0x60028FD; // RED DOWN ARROW
+    private const int ICON_MOVE_UP = 0x60028FC; // GREEN UP ARROW
+    private const int ICON_REMOVE = 0x60011F8; //RED CIRCLE SLASH
 
+    private const string ADVANCED_FILTER = "ADV";
+
+    private const char ADVANCED_FILTER_SEPERATOR = ':';
+    
+    private const string ADVANCED_FILTER_ARMOR = "ARMOR";
+    private const string ADVANCED_FILTER_ARMOR_HEAD = "Head";
+    private const string ADVANCED_FILTER_ARMOR_UPPERBODY = "UpperBody";
+    private const string ADVANCED_FILTER_ARMOR_LOWERBODY = "LowerBody";
+    private const string ADVANCED_FILTER_ARMOR_FEET = "Feet";
+    private const string ADVANCED_FILTER_ARMOR_HANDS = "Hands";
+
+    private const string ADVANCED_FILTER_CLOTHING = "CLOTHING";
+    private const string ADVANCED_FILTER_CLOTHING_UNDERSHIRT = "UnderShirt";
+    private const string ADVANCED_FILTER_CLOTHING_UNDERPANTS = "UnderPants";
+    
+    private const string ADVANCED_FILTER_JEWELRY = "JEWELRY";
+    private const string ADVANCED_FILTER_JEWELRY_NECK = "Neck";
+    private const string ADVANCED_FILTER_JEWELRY_WRIST = "Wrist";
+    private const string ADVANCED_FILTER_JEWELRY_FINGER = "Finger";
+    private const string ADVANCED_FILTER_JEWELRY_TRINKET = "Trinket";
+    
+    private const string ADVANCED_FILTER_ARMOR_SET = "SETS";
+    private const string ADVANCED_FILTER_SETS_SOLDIERS = "Soldiers";
+    private const string ADVANCED_FILTER_SETS_ADEPTS = "Adepts";
+    private const string ADVANCED_FILTER_SETS_ARCHERS = "Archers";
+    private const string ADVANCED_FILTER_SETS_DEFENDERS = "Defenders";
+    private const string ADVANCED_FILTER_SETS_TINKERS = "Tinkers";
+    private const string ADVANCED_FILTER_SETS_CRAFTERS = "Crafters";
+    private const string ADVANCED_FILTER_SETS_HEARTY = "Hearty";
+    private const string ADVANCED_FILTER_SETS_DEXTEROUS = "Dexterous";
+    private const string ADVANCED_FILTER_SETS_WISE = "Wise";
+    private const string ADVANCED_FILTER_SETS_SWIFT = "Swift";
+    private const string ADVANCED_FILTER_SETS_HARDENED = "Hardened";
+    private const string ADVANCED_FILTER_SETS_REINFORCED = "Reinforced";
+    private const string ADVANCED_FILTER_SETS_INTERLOCKING = "Interlocking";
+    private const string ADVANCED_FILTER_SETS_FLAMEPROOF = "Flameproof";
+    private const string ADVANCED_FILTER_SETS_ACIDPROOF = "Acidproof";
+    private const string ADVANCED_FILTER_SETS_COLDPROOF = "Coldproof";
+    private const string ADVANCED_FILTER_SETS_LIGHTNINGPROOF = "Lightningproof";
+    private const int ADVANCED_FILTER_SETS_SOLDIERS_ID = 13;
+    private const int ADVANCED_FILTER_SETS_ADEPTS_ID = 14;
+    private const int ADVANCED_FILTER_SETS_ARCHERS_ID = 15;
+    private const int ADVANCED_FILTER_SETS_DEFENDERS_ID = 16;
+    private const int ADVANCED_FILTER_SETS_TINKERS_ID = 17;
+    private const int ADVANCED_FILTER_SETS_CRAFTERS_ID = 18;
+    private const int ADVANCED_FILTER_SETS_HEARTY_ID = 19;
+    private const int ADVANCED_FILTER_SETS_DEXTEROUS_ID = 20;
+    private const int ADVANCED_FILTER_SETS_WISE_ID = 21;
+    private const int ADVANCED_FILTER_SETS_SWIFT_ID = 22;
+    private const int ADVANCED_FILTER_SETS_HARDENED_ID = 23;
+    private const int ADVANCED_FILTER_SETS_REINFORCED_ID = 24;
+    private const int ADVANCED_FILTER_SETS_INTERLOCKING_ID = 25;
+    private const int ADVANCED_FILTER_SETS_FLAMEPROOF_ID = 26;
+    private const int ADVANCED_FILTER_SETS_ACIDPROOF_ID = 27;
+    private const int ADVANCED_FILTER_SETS_COLDPROOF_ID = 28;
+    private const int ADVANCED_FILTER_SETS_LIGHTNINGPROOF_ID = 29;
+
+    
     private static PluginCore instance;
 
     public int containerDest = 0;
@@ -50,10 +109,9 @@ public class PluginCore : PluginBase
             foreach (WorldObject worldObject in Core.WorldFilter.GetByContainer(containerSource))
             {
                 if (worldObject.Values(LongValueKey.EquippedSlots, 0) == 0 
-                        && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1 
-                        && !worldObject.ObjectClass.Equals(ObjectClass.Foci) 
-                        && (MainView.cmbObjClassFilters.Current == 0
-                            || (MainView.cmbObjClassFilters.Current != 0 && worldObject.ObjectClass.ToString().ToLower().StartsWith(ocfilter.ToLower()))))
+                    && Core.WorldFilter[worldObject.Id].Values(LongValueKey.Slot) != -1 
+                    && !worldObject.ObjectClass.Equals(ObjectClass.Foci) 
+                    && MeetsSetFilterCriteria(worldObject))
                 {
                     addWorldObject(sortList, worldObject, false);
                 }
@@ -62,8 +120,185 @@ public class PluginCore : PluginBase
             CoreManager.Current.RenderFrame += new EventHandler<EventArgs>(Current_RenderFrame_Sort);
         }
         catch (Exception e) { Util.LogError(e); }
+
+        
     }
 
+    private bool MeetsSetFilterCriteria(WorldObject worldObject)
+    {
+        bool checkOne = MainView.cmbObjClassFilters.Current == 0;
+        bool checkTwoPartOne = MainView.cmbObjClassFilters.Current != 0;
+        bool checkTwoPartTwo = worldObject.ObjectClass.ToString().ToLower().StartsWith(ocfilter.ToLower());
+        if (ocfilter.StartsWith(ADVANCED_FILTER))
+        {
+            string[] sections = ocfilter.Split(ADVANCED_FILTER_SEPERATOR);
+            if (sections.Length == 3)
+            {
+                switch (sections[1])
+                {
+                    case ADVANCED_FILTER_ARMOR:
+                        switch (sections[2])
+                        {
+                            case ADVANCED_FILTER_ARMOR_HEAD:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.HEAD_WEAR_LOC_HEAD
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_ARMOR_UPPERBODY:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.CHEST_ARMOR_LOC_CHEST
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.UPPER_ARM_ARMOR_LOC_UPPERARMS
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.LOWER_ARM_ARMOR_LOC_LOWERARMS
+                                ) { checkTwoPartTwo = true; }  break;
+                            case ADVANCED_FILTER_ARMOR_LOWERBODY:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.ABDOMEN_ARMOR_LOC_ABDOMEN
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.UPPER_LEG_ARMOR_LOC_UPPERLEGS
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.LOWER_LEG_ARMOR_LOC_LOWERLEGS
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_ARMOR_FEET:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.FOOT_WEAR_LOC_FEET
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_ARMOR_HANDS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.HAND_WEAR_LOC_HANDS
+                                ) { checkTwoPartTwo = true; } break;
+                        }
+                        break;
+                    case ADVANCED_FILTER_CLOTHING:
+                        switch (sections[2])
+                        {
+                            case ADVANCED_FILTER_CLOTHING_UNDERSHIRT:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.CHEST_WEAR_LOC_CHEST_UNDERWEAR
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.UPPER_ARM_WEAR_LOC_UPPERARMS_UNDERWEAR
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.LOWER_ARM_WEAR_LOC_LOWERARMS_UNDERWEAR
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.HEAD_WEAR_LOC_HEAD
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.HAND_WEAR_LOC_HANDS
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_CLOTHING_UNDERPANTS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.ABDOMEN_WEAR_LOC_ABDOMEN_UNDERWEAR
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.UPPER_LEG_WEAR_LOC_UPPERLEGS_UNDERWEAR
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.LOWER_LEG_WEAR_LOC_LOWERLEGS_UNDERWEAR
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.Slot) == (int)SLOTValueKey.FOOT_WEAR_LOC_FEET
+                                ) { checkTwoPartTwo = true; } break;
+                        }
+                        break;
+                    case ADVANCED_FILTER_JEWELRY:
+                        switch (sections[2])
+                        {
+                            case ADVANCED_FILTER_JEWELRY_NECK:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.NECK_WEAR_LOC_NECKLACE
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_JEWELRY_WRIST:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.WRIST_WEAR_LEFT_LOC_LEFTBRACELET
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.WRIST_WEAR_RIGHT_LOC_RIGHTBRACELET
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.WRIST_WEAR_LOC_EITHERBRACELETSLOT
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_JEWELRY_FINGER:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.FINGER_WEAR_LEFT_LOC_LEFTRING
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.FINGER_WEAR_RIGHT_LOC_RIGHTRING
+                                    || worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) == (int)SLOTValueKey.FINGER_WEAR_LOC_EITHERRINGSLOT
+                                ) { checkTwoPartTwo = true; } break;
+                            // case ADVANCED_FILTER_JEWELRY_TRINKET :
+                            //     if(
+                            //         worldObject.ObjectClass.ToString().ToUpper().StartsWith(ADVANCED_FILTER_JEWELRY) 
+                            //         && worldObject.Values((LongValueKey)MSLongValueKey.Slot) ==  (int)SLOTValueKey.
+                            //     ) { checkTwoPartTwo = true; }
+                            //     break;
+                        }
+                        break;
+                    case ADVANCED_FILTER_ARMOR_SET:
+                        switch (sections[2])
+                        {
+                            case ADVANCED_FILTER_SETS_SOLDIERS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_SOLDIERS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_ADEPTS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_ADEPTS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_ARCHERS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_ARCHERS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_DEFENDERS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_DEFENDERS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_TINKERS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_TINKERS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_CRAFTERS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_CRAFTERS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_HEARTY:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_HEARTY_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_DEXTEROUS:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_DEXTEROUS_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_WISE:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_WISE_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_SWIFT:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_SWIFT_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_HARDENED:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_HARDENED_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_REINFORCED:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_REINFORCED_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_INTERLOCKING:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_INTERLOCKING_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_FLAMEPROOF:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_FLAMEPROOF_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_ACIDPROOF:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_ACIDPROOF_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_COLDPROOF:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_COLDPROOF_ID
+                                ) { checkTwoPartTwo = true; } break;
+                            case ADVANCED_FILTER_SETS_LIGHTNINGPROOF:
+                                if (
+                                    worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) == ADVANCED_FILTER_SETS_LIGHTNINGPROOF_ID
+                                ) { checkTwoPartTwo = true; } break;
+                        }
+                        break;
+                }
+
+                string found = checkTwoPartTwo ? "FOUND" : "NOT FOUND";
+                
+                Util.WriteToChat($"ObjectClass: {worldObject.ObjectClass.ToString().ToUpper()} " +
+                                 $"| Equipment Slot: { worldObject.Values((LongValueKey)MSLongValueKey.EquipableSlots) } " +
+                                 $"| Armor Set: { worldObject.Values((LongValueKey)MSLongValueKey.ArmorSet) } " +
+                                 $"| [{found}]");
+            }
+        }
+        
+        return checkOne || (checkTwoPartOne && checkTwoPartTwo);
+    }
+    
     public void addWorldObject(System.Collections.IList toList, WorldObject worldObject, bool recursive)
     {
         if (!worldObject.HasIdData)

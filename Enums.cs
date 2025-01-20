@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace mudsort
+﻿namespace mudsort
 {
     public enum MSStringValueKey
     {
@@ -153,7 +149,6 @@ namespace mudsort
         Dyeable = 100//,
         //AwayFromKeyboard = 110
     }
-
     public enum MSDoubleValueKey
     {
         SlashProt = 167772160,
@@ -181,5 +176,31 @@ namespace mudsort
         MissileDBonus = 149,
         MagicDBonus = 150,
         ElementalDamageVersusMonsters = 152
+    }
+    public enum SLOTValueKey
+    {
+        HEAD_WEAR_LOC_HEAD=1,
+        CHEST_WEAR_LOC_CHEST_UNDERWEAR=2,
+        ABDOMEN_WEAR_LOC_ABDOMEN_UNDERWEAR=4,
+        UPPER_ARM_WEAR_LOC_UPPERARMS_UNDERWEAR=8,
+        LOWER_ARM_WEAR_LOC_LOWERARMS_UNDERWEAR=16,
+        HAND_WEAR_LOC_HANDS=32,
+        UPPER_LEG_WEAR_LOC_UPPERLEGS_UNDERWEAR=64,
+        LOWER_LEG_WEAR_LOC_LOWERLEGS_UNDERWEAR=128,
+        FOOT_WEAR_LOC_FEET=256,
+        CHEST_ARMOR_LOC_CHEST=512,
+        ABDOMEN_ARMOR_LOC_ABDOMEN=1024,
+        UPPER_ARM_ARMOR_LOC_UPPERARMS=2048,
+        LOWER_ARM_ARMOR_LOC_LOWERARMS=4096,
+        UPPER_LEG_ARMOR_LOC_UPPERLEGS=8192,
+        LOWER_LEG_ARMOR_LOC_LOWERLEGS=16384,
+        ARMOR_LOC=32256,
+        NECK_WEAR_LOC_NECKLACE=32768,
+        WRIST_WEAR_LEFT_LOC_LEFTBRACELET=65536,
+        WRIST_WEAR_RIGHT_LOC_RIGHTBRACELET=131072,
+        WRIST_WEAR_LOC_EITHERBRACELETSLOT=196608,
+        FINGER_WEAR_LEFT_LOC_LEFTRING=262144,
+        FINGER_WEAR_RIGHT_LOC_RIGHTRING=524288,
+        FINGER_WEAR_LOC_EITHERRINGSLOT=786432
     }
 }
