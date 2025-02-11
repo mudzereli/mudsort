@@ -1,4 +1,4 @@
-!define APPNAME "MudSort"
+!define APPNAME "mudsort"
 !define SOFTWARECOMPANY "mudzereli"
 !define APPGUID "{0a2f484b-54a6-4084-8286-c374231148a6}"
 !define CLASSNAME "mudsort.PluginCore"
@@ -10,7 +10,7 @@ InstallDir "C:\Games\Decal Plugins\${APPNAME}"
 !getdllversion "${BUILDPATH}\${ASSEMBLY}" Expv_
 !define VERSION ${Expv_1}.${Expv_2}.${Expv_3}
 
-OutFile "${BUILDPATH}\${APPNAME}Installer-${VERSION}.exe"
+OutFile "${BUILDPATH}\${APPNAME}-installer-${VERSION}.exe"
 
 ; Main Install settings
 ; compressor goes first
@@ -48,7 +48,7 @@ Section "" CoreSection
     SetOutPath "$INSTDIR\"
     
     File "${BUILDPATH}\${ASSEMBLY}"
-    File "${BUILDPATH}\example_sort_meta.met"
+    ;File "${BUILDPATH}\example_sort_meta.met"
 
 SectionEnd
 
