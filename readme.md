@@ -19,21 +19,17 @@ Mudsort is a VERY powerful sorting plugin for Decal. Some example uses:
 1. [Asheron's Call](http://www.asheronscall.com/en)
 2. [Decal 2.9.7.5](http://www.decaldev.com/)
 3. [Virindi Views](http://virindi.net/plugins/) (Comes in Virindi Bundle)
-4. [mudsort.dll](https://github.com/mudzereli/mudsort/raw/master/bin/Release/mudsort.dll)
+4. [mudsort](github.com/mudzereli/mudsort/releases/latest)
 
 ## Installation
 
-1. Download [mudsort.dll](https://github.com/mudzereli/mudsort/raw/master/bin/Release/mudsort.dll).
-2. **Unblock the DLL**:
-   - Right-click on `mudsort.dll`.
-   - Select **Properties**.
-   - In the **General** tab, check the box that says **Unblock** (if it is present) and click **OK**.
+1. Download [mudsort](github.com/mudzereli/mudsort/releases/latest).
+2. **Run the Installer**
 3. Open Decal.
-4. Click **Add** in Decal.
-5. Click **Browse** in Decal.
-6. Find and select `mudsort.dll`.
-7. Make sure you have **Virindi View Service Bootstrapper** running under **Services** in Decal.
-8. Start Asheron's Call and enjoy!
+4. Confirm that `mudsort` is in the plugin list. If not, restart Decal.
+5. Make sure you have `Virindi View Service Bootstrapper` running under `Services` in Decal.
+   - If you don't have this, you are missing **Step #3** from Requirements
+6. Start Asheron's Call and enjoy!
 
 ## Plugin Usage
 
