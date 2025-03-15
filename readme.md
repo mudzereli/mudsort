@@ -17,13 +17,13 @@ Mudsort is a VERY powerful sorting plugin for Decal. Some example uses:
 ## Requirements
 
 1. [Asheron's Call](http://www.asheronscall.com/en)
-2. [Decal 2.9.7.5](http://www.decaldev.com/)
+2. [Decal 2.9.8.3](http://www.decaldev.com/)
 3. [Virindi Views](http://virindi.net/plugins/) (Comes in Virindi Bundle)
-4. [mudsort](github.com/mudzereli/mudsort/releases/latest)
+4. [mudsort](https://github.com/mudzereli/mudsort/releases/latest)
 
 ## Installation
 
-1. Download [mudsort](github.com/mudzereli/mudsort/releases/latest) and *Run the Installer*
+1. Download [mudsort](https://github.com/mudzereli/mudsort/releases/latest) and *Run the Installer*
 2. Open Decal and confirm that `mudsort` is in the plugin list. If not, restart Decal.
    - If you are using a version of `mudsort` older than 1.6.7 you may need to remove it from Decal manually before installing the new version.
 3. Make sure you have `Virindi View Service Bootstrapper` running under `Services` in Decal.
